@@ -1,8 +1,6 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity } from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 import Lottie from 'lottie-react-native';
-
 
 // const Done = ({ ...props }) => (
 //     <TouchableOpacity
@@ -28,13 +26,13 @@ const Onboard = () => {
                 },
                 {
                     backgroundColor: '#fff',
-                    image: <Lottie source={require('../../../assets/Tracking.json')} autoPlay speed={1} style={{ width: 350, height: 350 }} />,
+                    image: <Lottie source={require('../../../assets/tracking.json')} autoPlay speed={1} style={{ width: 350, height: 350 }} />,
                     title: 'Live Tracking',
                     subtitle: 'Keep track of the ride with live map tracking ',
                 },
                 {
                     backgroundColor: '#fff',
-                    image: <Lottie source={require('../../../assets/Notifications.json')} autoPlay speed={1} style={{ width: 350, height: 350 }} />,
+                    image: <Lottie source={require('../../../assets/notifications.json')} autoPlay speed={1} style={{ width: 350, height: 350 }} />,
                     title: 'Get Notified',
                     subtitle: 'Stay in the loop with instant notifications, and alerts on any device',
                 }
