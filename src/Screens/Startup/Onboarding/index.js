@@ -1,22 +1,30 @@
 import React from 'react';
 import Onboarding from 'react-native-onboarding-swiper';
+import { useNavigation } from '@react-navigation/native';
 import Lottie from 'lottie-react-native';
+import { TouchableOpacity, Text } from 'react-native';
+import { secondaryLight } from '../../../constants/colors';
 
-// const Done = ({ ...props }) => (
-//     <TouchableOpacity
-//         style={{
-//             marginHorizontal : 8,
-//         }}
-//         {...props}
-//     >
-//         <Text style={{ fontSize: 16 }}>Done</Text>
-//     </TouchableOpacity>
-// );
+const Done = ({ ...props }) => (
+    <TouchableOpacity
+        style={{
+            marginHorizontal : 16,
+        }}
+        {...props}
+    >
+        <Text style={{ fontSize: 16 , color:'black' }}>Done</Text>
+    </TouchableOpacity>
+);
+ 
+const OnboardingScreen = () => {
+  const navigation = useNavigation();
 
-const Onboard = () => {
     return (
         <Onboarding
-            // DoneButtonComponent={Done}
+        onSkip={() => navigation.replace("LoginScreen")}
+        onDone={() => navigation.navigate("LoginScreen")}
+    
+        DoneButtonComponent={Done}
             pages={[
                 {
                     backgroundColor: '#fff',
@@ -40,4 +48,4 @@ const Onboard = () => {
     );
 };
 
-export default Onboard;
+export default OnboardingScreen;

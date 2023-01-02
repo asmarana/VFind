@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, } from 'react-native';
-import { primary } from '../../../themes/colors';
+import { primary } from '../../../constants/colors';
 
 const Splash = () => {
 	return (
