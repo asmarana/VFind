@@ -48,7 +48,6 @@ const LoginScreen = ({ }) => {
     <SafeAreaView style={{ backgroundColor: whiteplus, flex: 1 }}>
       <Loader visible={loading} />
       <View style={{ paddingTop: 120, paddingHorizontal: 20 }}>
-        {/* <Lottie source={require('../../../assets/notifications.json')} autoPlay speed={1} style={{ width: 150, height: 150 }} /> */}
         <Text style={{ color: secondary, fontSize: 40, fontWeight: 'bold' }}>
           Log In
         </Text>
@@ -58,11 +57,7 @@ const LoginScreen = ({ }) => {
         <View style={{ marginVertical: 20 }}>
           <BorderInput
             // onChangeText={text => handleOnchange(text, 'email')}
-            // onChangeText={(userEmail) => setEmail(userEmail)}
             // onFocus={() => handleError(null, 'email')}
-            // iconName="email-outline"
-            // label={email}
-            // placeholder="Enter your email address"
             // error={errors.email}
             label="Email"
             onChangeText={(userEmail) => setEmail(userEmail)}

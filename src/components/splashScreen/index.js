@@ -44,8 +44,8 @@ const SplashScreen = () => {
                 Animated.timing(
                     scaleLogo,
                     {
-                        // Scaling to 0.35
-                        toValue: 0.5,
+                        // Scaling tpo 0.35
+                        toValue: 0.4,
                         useNativeDriver: true
                     }
                 ),
@@ -90,7 +90,7 @@ const SplashScreen = () => {
             ])
                 .start();
 
-        }, 900);
+        }, 1200);
 
     }, []);
 
@@ -110,12 +110,13 @@ const SplashScreen = () => {
     } else if (isFirstLaunch == true) {
         return (
 
+
             <View style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, }}>
-                <Animated.View style={{ flex: 1, backgroundColor: whiteplus, zIndex: 1, transform: [{ translateY: startAnimation }] }}>
+                <Animated.View style={{ flex: 1, backgroundColor: 'white', zIndex: 1, transform: [{ translateY: startAnimation }] }}>
                     <Animated.View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
                         <Animated.Image source={Logo}
                             style={{
-                                width: 100, height: 100, marginBottom: 20,
+                                width: 265, height: 140, marginBottom: 20,
                                 transform: [
                                     { translateX: moveLogo.x },
                                     { translateY: moveLogo.y },

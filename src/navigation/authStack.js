@@ -5,7 +5,7 @@ import Loader from '../components/loader/loader';
 import SplashScreen from '../components/splashScreen';
 import LoginScreen from '../screens/startup/login';
 import SignupScreen from '../screens/startup/signup';
-import MapScreen from '../screens/navbar/mapScreen';
+import UserTypeScreen from '../screens/startup/userType';
 
 const Stack =  createNativeStackNavigator();
 
@@ -20,7 +20,7 @@ const AuthStack = () => {
                 <Stack.Screen name="SplashScreen" component={SplashScreen} options={{header: () => null}}/>
                 <Stack.Screen name="SignupScreen" component={SignupScreen} options={{header: () => null}}/>
                 <Stack.Screen name="LoginScreen" component={LoginScreen} options={{header: () => null}} />
-                <Stack.Screen name="MapScreen" component={MapScreen} />
+                <Stack.Screen name="UserTypeScreen" component={UserTypeScreen} options={{header: () => null}} />
             </Stack.Navigator>
         </>
   );

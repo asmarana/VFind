@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MapScreen from '../screens/navbar/mapScreen';
 import { primary, whiteplus } from '../constants/colors';
 import MapMenuScreen from '../screens/navbar/mapScreen/mapMenu';
@@ -136,7 +135,7 @@ const AppStack = () => {
 
     return (
         <Tab.Navigator
-            tabBarOptions={{
+        screenOptions={{
                 activeTintColor: primary,
             }}>
             <Tab.Screen
@@ -211,29 +210,3 @@ const AppStack = () => {
 };
 
 export default AppStack;
-
-// import React from 'react';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import Loader from '../components/loader/loader';
-// import SplashScreen from '../components/splashScreen';
-
-// import MapScreen from '../screens/navbar/mapScreen';
-// import ProfileScreen from '../screens/navbar/profileScreen';
-
-// const Stack =  createNativeStackNavigator();
-
-// const AppStack = () => {
-
-//     return (
-//         <>
-//             <Loader visible={true} />
-//             <Stack.Navigator
-//                 initialRouteName={SplashScreen}
-//                 screenOptions={{ headerShown: false }}>
-//                 <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-//             </Stack.Navigator>
-//         </>
-//   );
-// };
-
-// export default AppStack;
