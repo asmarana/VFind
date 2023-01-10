@@ -6,6 +6,7 @@ import Loader from '../components/loader/loader';
 
 import AuthStack from './authStack';
 import AppStack from './appStack';
+import DriverStack from './driverStack';
 
 const Routes = () => {
 
@@ -29,7 +30,7 @@ const Routes = () => {
 
   return (
     <NavigationContainer>
-      {user ? <AppStack /> : <AuthStack />}
+      {user ? <DriverStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

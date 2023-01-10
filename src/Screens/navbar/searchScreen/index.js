@@ -1,11 +1,31 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, TextInput } from 'react-native';
 import { secondary, whiteplus } from '../../../constants/colors';
+import Lottie from 'lottie-react-native';
+import Button from '../../../components/button/button';
 
 const SearchScreen = () => {
+  const [pickupLocation, setPickupLocation] = useState('');
+  const [destination, setDestination] = useState('');
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Search screen</Text>
+      <Lottie source={require('../../../assets/VFindTrack.json')} autoPlay speed={1} style={{ width: 250, height: 250 }} />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Pickup Location"
+        placeholderTextColor="#aaaaaa"
+        value={pickupLocation}
+        onChangeText={(text) => setPickupLocation(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Destination"
+        placeholderTextColor="#aaaaaa"
+        value={destination}
+        onChangeText={(text) => setDestination(text)}
+      />
+      <Button label={"Find a Driver"} />
     </View>
   );
 };
@@ -22,6 +42,16 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    color:secondary,
-  }
+    color: secondary,
+  },
+  input: {
+    height: 40,
+    width: '80%',
+    // borderRadius: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#000000',
+    marginTop: 20,
+    paddingHorizontal: 10,
+    fontSize: 16,
+  },
 })
