@@ -22,7 +22,7 @@ const UserTypeScreen = ({navigation}) => {
                             <View style = {{ alignItems : 'center'}}>
                                 <Lottie source={require('../../../assets/finder.json')} autoPlay speed={1} style={{ width: 150, height: 150, }} />
                             </View>
-                            <Button label=" Finder"  onPress={() => navigation.navigate('AppStack')}/>
+                            <Button label=" Finder"  onPress={() => navigation.navigate('FinderStack')}/>
                         </View>
                     </View>
                 </View>

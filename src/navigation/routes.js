@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { AuthContext } from './authProvider';
 import Loader from '../components/loader/loader';
-
 import AuthStack from './authStack';
 import AppStack from './appStack';
 import DriverStack from './driverStack';
@@ -15,7 +14,8 @@ const Routes = () => {
 
   const onAuthStateChanged = (user) => {
     setUser(user);
-    if (initializing) setInitializing(false);
+    if (initializing) 
+    setInitializing(false);
   };
 
   useEffect(() => {

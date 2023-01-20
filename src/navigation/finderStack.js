@@ -5,9 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import MapScreen from '../screens/navbar/mapScreen';
-import { primary, whiteplus } from '../constants/colors';
-import MapMenuScreen from '../screens/navbar/mapScreen/mapMenu';
+import { primary } from '../constants/colors';
 import ProfileScreen from '../screens/navbar/profileScreen';
 import ChatScreen from '../screens/navbar/chatScreen';
 import SearchScreen from '../screens/navbar/searchScreen';
@@ -25,55 +23,6 @@ const LogoHeader = () => (
     </View>
   );
 
-const MapStack = ({ navigation }) => (
-    <Stack.Navigator>
-        <Stack.Screen
-            name="Map"
-            component={MapScreen}
-            options={{
-                headerLeft: () => <LogoHeader />,
-                title : '',
-                // headerTitleStyle: {
-                //     color: primary,
-                // },
-                headerStyle: {
-                    shadowColor: '#fff',
-                    elevation: 0,
-                },
-                // headerRight: () => (
-                //     <View style={{ marginRight: 2 }}>
-                //         <FontAwesome5.Button
-                //             name="bars"
-                //             size={22}
-                //             backgroundColor="#fff"
-                //             color = {primary}
-                //             onPress={() => navigation.navigate('MapMenuScreen')}
-                //         />
-                //     </View>
-                // ),
-            }}
-        />
-        <Stack.Screen
-            name="MapMenuScren"
-            component={MapMenuScreen}
-            options={{
-                title: '',
-                headerTitleAlign: 'center',
-                headerStyle: {
-                    backgroundColor: whiteplus,
-                    shadowColor: '#2e64e515',
-                    elevation: 0,
-                },
-                headerBackTitleVisible: false,
-                headerBackImage: () => (
-                    <View style={{ marginLeft: 15 }}>
-                        <Ionicons name="arrow-back" size={25} color="#2e64e5" />
-                    </View>
-                ),
-            }}
-        />
-    </Stack.Navigator>
-);
 
 const SearchStack = () => (
     <Stack.Navigator>
@@ -81,7 +30,8 @@ const SearchStack = () => (
             name="SearchScreen"
             component={SearchScreen}
             options={{
-                headerShown: false,
+                headerLeft: () => <LogoHeader />,
+                title : '',
             }}
         />
     </Stack.Navigator>
@@ -121,7 +71,7 @@ const ProfileStack = ({ navigation }) => (
     </Stack.Navigator>
 );
 
-const AppStack = () => {
+const FinderStack = () => {
     const getTabBarVisibility = (route) => {
         const routeName = route.state
             ? route.state.routes[route.state.index].name
@@ -134,32 +84,15 @@ const AppStack = () => {
     };
 
     return (
-        <Tab.Navigator   
-        // tabBarOptions = {{
-        //     activeTintColor: primary}}
+        <Tab.Navigator
         screenOptions={{
                 activeTintColor: primary,
-            }}
-            >
-            <Tab.Screen
-                name="V Find"
-                component={MapStack}
-                options={({ route }) => ({
-                    tabBarLabel: 'Maps',
-                    tabBarIcon: ({ color, size }) => (
-                        <Feather
-                            name="map-pin"
-                            color={color}
-                            size={size}
-                        />
-                    ),
-                    headerShown: false,
-                })}
-            />
+            }}>
             <Tab.Screen
                 name="Search"
                 component={SearchStack}
                 options={({ route }) => ({
+                    headerShown: false,
                     tabBarLabel: 'Search',
                     tabBarIcon: ({ color, size }) => (
                         <Feather
@@ -212,4 +145,4 @@ const AppStack = () => {
     );
 };
 
-export default AppStack;
+export default FinderStack;

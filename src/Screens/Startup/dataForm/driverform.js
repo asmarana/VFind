@@ -47,7 +47,11 @@ const DriverForm = () => {
     }
 
     if (isValid) {
-      navigation.navigate('VehicleInfoScreen');
+      setFirstName(inputs.firstname)
+      setLastName(inputs.lastname)
+      setPhoneNumber(inputs.phone)
+      setCnic(inputs.cnic)
+      submitData();
 
     }
   };
@@ -97,8 +101,7 @@ const DriverForm = () => {
         </Text>
         <View style={{ marginVertical: 10 }}>
           <BorderInput
-            // onChangeText={text => handleOnchange(text, 'firstname')}
-            onChangeText={(content) => setFirstName(content)}
+            onChangeText={text => handleOnchange(text, 'firstname')}
             onFocus={() => handleError(null, 'firstname')}
             iconName="account-outline"
             label="First Name"
@@ -106,8 +109,7 @@ const DriverForm = () => {
             error={errors.firstname}
           />
           <BorderInput
-            onChangeText={(content) => setLastName(content)}
-            // onChangeText={text => handleOnchange(text, 'lastname')}
+            onChangeText={text => handleOnchange(text, 'lastname')}
             onFocus={() => handleError(null, 'lastname')}
             iconName="account-outline"
             label="Last Name"
@@ -116,8 +118,7 @@ const DriverForm = () => {
           />
           <BorderInput
             keyboardType="numeric"
-            onChangeText={(content) => setPhoneNumber(content)}
-            // onChangeText={text => handleOnchange(text, 'phone')}
+            onChangeText={text => handleOnchange(text, 'phone')}
             onFocus={() => handleError(null, 'phone')}
             iconName="phone-outline"
             label="Phone Number"
@@ -126,16 +127,14 @@ const DriverForm = () => {
           />
           <BorderInput
             keyboardType="numeric"
-            onChangeText={(content) => setCnic(content)}
-            // onChangeText={text => handleOnchange(text, 'cnic')}
+            onChangeText={text => handleOnchange(text, 'cnic')}
             onFocus={() => handleError(null, 'cnic')}
             iconName="id-card"
             label="CNIC"
             placeholder="Enter your CNIC"
             error={errors.cnic}
           />
-          <Button label="Next" onPress={submitData} />
-          {/* <Button label="Submit" onPress={} /> */}
+          <Button label="Submit" onPress={validate} />
         </View>
       </ScrollView>
     </SafeAreaView>

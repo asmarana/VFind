@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, TextInput } from 'react-native';
-import { secondary, whiteplus } from '../../../constants/colors';
+import { secondary, whiteplus,white } from '../../../constants/colors';
 import Lottie from 'lottie-react-native';
 import Button from '../../../components/button/button';
 
@@ -10,7 +10,6 @@ const SearchScreen = () => {
   return (
     <View style={styles.container}>
       <Lottie source={require('../../../assets/VFindTrack.json')} autoPlay speed={1} style={{ width: 250, height: 250 }} />
-
       <TextInput
         style={styles.input}
         placeholder="Pickup Location"
@@ -34,7 +33,7 @@ export default SearchScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: whiteplus,
+    backgroundColor: white,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

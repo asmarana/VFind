@@ -63,6 +63,13 @@ const VehicleForm = () => {
         }
 
         if (isValid) {
+            setVehicleName(inputs.vehicleName)
+            setVehicleType(inputs.vehicleType)
+            setVehicleId(inputs.vehicleId)
+            setLisenseNo(inputs.lisenseNo)
+            setTotalSeats(inputs.totalSeats)
+            setAvailableSeats(inputs.availableSeats)
+            submitData();
         }
     };
 
@@ -114,8 +121,7 @@ const VehicleForm = () => {
                 <View style={{ marginVertical: 10 }}>
 
                     <BorderInput
-                        onChangeText={(content) => setVehicleName(content)}
-                        // onChangeText={text => handleOnchange(text, 'vehicleType')}
+                        onChangeText={text => handleOnchange(text, 'vehicleType')}
                         onFocus={() => handleError(null, 'vehicleType')}
                         iconName="van-passenger"
                         label="Vehicle Name"
@@ -123,8 +129,7 @@ const VehicleForm = () => {
                         error={errors.vehicleType}
                     />
                     <BorderInput
-                        onChangeText={(content) => setVehicleType(content)}
-                        // onChangeText={text => handleOnchange(text, 'vehicleName')}
+                        onChangeText={text => handleOnchange(text, 'vehicleName')}
                         onFocus={() => handleError(null, 'vehicleName')}
                         iconName="van-passenger"
                         label="Vehicle Type"
@@ -133,8 +138,7 @@ const VehicleForm = () => {
                     />
                     <BorderInput
                         keyboardType="numeric"
-                        onChangeText={(content) => setVehicleId(content)}
-                        // onChangeText={text => handleOnchange(text, 'vehicleId')}
+                        onChangeText={text => handleOnchange(text, 'vehicleId')}
                         onFocus={() => handleError(null, 'vehicleId')}
                         iconName="tablet"
                         label="Vehicle Id"
@@ -143,8 +147,7 @@ const VehicleForm = () => {
                     />
                     <BorderInput
                         keyboardType="numeric"
-                        onChangeText={(content) => setLisenseNo(content)}
-                        // onChangeText={text => handleOnchange(text, 'lisenseNo')}
+                        onChangeText={text => handleOnchange(text, 'lisenseNo')}
                         onFocus={() => handleError(null, 'lisenseNo')}
                         iconName="id-card"
                         label="Lisense No"
@@ -154,8 +157,7 @@ const VehicleForm = () => {
                     />
                     <BorderInput
                         keyboardType="numeric"
-                        onChangeText={(content) => setTotalSeats(content)}
-                        // onChangeText={text => handleOnchange(text, 'totalSeats')}
+                        onChangeText={text => handleOnchange(text, 'totalSeats')}
                         onFocus={() => handleError(null, 'totalSeats')}
                         iconName="seat"
                         label="Total Seats"
@@ -164,8 +166,7 @@ const VehicleForm = () => {
                     />
                     <BorderInput
                         keyboardType="numeric"
-                        onChangeText={(content) => setAvailableSeats(content)}
-                        // onChangeText={text => handleOnchange(text, 'availableSeats')}
+                        onChangeText={text => handleOnchange(text, 'availableSeats')}
                         onFocus={() => handleError(null, 'availableSeats')}
                         iconName="seat"
                         label="Available Seats"
@@ -175,7 +176,7 @@ const VehicleForm = () => {
                 </View>
             </ScrollView>
             <View style={{ paddingHorizontal: 20 }}>
-                <Button label="Next" onPress={submitData} />
+                <Button label="Next" onPress={validate} />
             </View>
         </SafeAreaView >
     );

@@ -42,6 +42,10 @@ const RouteForm = () => {
         }
 
         if (isValid) {
+            setPickupArea(inputs.pickupArea)
+            setroute(inputs.route)
+            setschool(inputs.school)
+            submitData();
         }
     };
 
@@ -88,8 +92,7 @@ const RouteForm = () => {
                 </Text>
                 <View style={{ marginVertical: 10 }}>
                     <BorderInput
-                        onChangeText={(content) => setPickupArea(content)}
-                        // onChangeText={text => handleOnchange(text, 'pickupArea')}
+                        onChangeText={text => handleOnchange(text, 'pickupArea')}
                         onFocus={() => handleError(null, 'pickupArea')}
                         iconName="map-marker"
                         label="pickup Area"
@@ -97,8 +100,7 @@ const RouteForm = () => {
                         error={errors.pickupArea}
                     />
                     <BorderInput
-                        onChangeText={(content) => setroute(content)}
-                        // onChangeText={text => handleOnchange(text, 'route')}
+                        onChangeText={text => handleOnchange(text, 'route')}
                         onFocus={() => handleError(null, 'route')}
                         iconName="map-marker"
                         label="Route"
@@ -106,15 +108,14 @@ const RouteForm = () => {
                         error={errors.route}
                     />
                     <BorderInput
-                        onChangeText={(content) => setschool(content)}
-                        // onChangeText={text => handleOnchange(text, 'school')}
+                        onChangeText={text => handleOnchange(text, 'school')}
                         onFocus={() => handleError(null, 'school')}
                         iconName="map-outline"
                         label="School"
                         placeholder="Enter school"
                         error={errors.school}
                     />
-                    <Button label="Next" onPress={submitData} />
+                    <Button label="Next" onPress={validate} />
                 </View>
             </ScrollView>
         </SafeAreaView>

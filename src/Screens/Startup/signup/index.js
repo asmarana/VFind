@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, SafeAreaView, Keyboard, ScrollView, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from '../../../components/button/button';
 import BorderInput from '../../../components/input/borderInput';
 import Loader from '../../../components/loader/loader';
-import { white, secondary,grey, primaryLight, whiteplus } from '../../../constants/colors';
+import { secondary,primaryLight, whiteplus } from '../../../constants/colors';
 import {AuthContext} from '../../../navigation/authProvider';
 
 const SignupScreen = ({ navigation }) => {
@@ -25,13 +24,13 @@ const SignupScreen = ({ navigation }) => {
     Keyboard.dismiss();
     let isValid = true;
 
-    // if (!inputs.email) {
-    //   handleError('Please input email', 'email');
-    //   isValid = false;
-    // } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
-    //   handleError('Please input a valid email', 'email');
-    //   isValid = false;
-    // }
+    if (!inputs.email) {
+      handleError('Please input email', 'email');
+      isValid = false;
+    } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+      handleError('Please input a valid email', 'email');
+      isValid = false;
+    }
 
     if (!inputs.fullname) {
       handleError('Please input fullname', 'fullname');
@@ -43,16 +42,18 @@ const SignupScreen = ({ navigation }) => {
       isValid = false;
     }
 
-    // if (!inputs.password) {
-    //   handleError('Please input password', 'password');
-    //   isValid = false;
-    // } else if (inputs.password.length < 5) {
-    //   handleError('Minimum password length should be 5', 'password');
-    //   isValid = false;
-    // }
+    if (!inputs.password) {
+      handleError('Please input password', 'password');
+      isValid = false;
+    } else if (inputs.password.length < 5) {
+      handleError('Minimum password length should be 5', 'password');
+      isValid = false;
+    }
 
     if (isValid) {
-      register(email, password);
+      setEmail(inputs.email)
+      setPassword(inputs.password)
+      register(email, password)
     }
   };
 
@@ -67,7 +68,7 @@ const SignupScreen = ({ navigation }) => {
     <SafeAreaView style={{ backgroundColor: whiteplus, flex: 1 }}>
       <Loader visible={loading} />
       <ScrollView
-        contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20 }}>
+        contentContainerStyle={{ paddingTop: 20, paddingHorizontal: 20 }}>
         <Text style={{ color: secondary, fontSize: 40, fontWeight: 'bold' }}>
           Signup
         </Text>
@@ -76,7 +77,7 @@ const SignupScreen = ({ navigation }) => {
         </Text>
         <View style={{ marginVertical: 20 }}>
           <BorderInput
-            // // onChangeText={text => handleOnchange(text, 'email')}
+            onChangeText={text => handleOnchange(text, 'email')}
             // onChangeText={(userEmail) => setEmail(userEmail)}
             // onFocus={() => handleError(null, 'email')}
             // iconName="email-outline"
@@ -84,7 +85,7 @@ const SignupScreen = ({ navigation }) => {
             // placeholder="Enter your email address"
             // error={errors.email}
             label="Email"
-            onChangeText={(userEmail) => setEmail(userEmail)}
+            // onChangeText={(userEmail) => setEmail(userEmail)}
             placeholder="Enter your email"
             iconName="email-outline"
             keyboardType="email-address"
@@ -111,8 +112,8 @@ const SignupScreen = ({ navigation }) => {
             error={errors.phone}
           />
           <BorderInput
-            // onChangeText={text => handleOnchange(text, 'password')}
-            onChangeText={(userPassword) => setPassword(userPassword)}
+            onChangeText={text => handleOnchange(text, 'password')}
+            // onChangeText={(userPassword) => setPassword(userPassword)}
             onFocus={() => handleError(null, 'password')}
             iconName="lock-outline"
             label="Password"

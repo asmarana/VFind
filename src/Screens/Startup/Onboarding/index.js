@@ -3,7 +3,6 @@ import Onboarding from 'react-native-onboarding-swiper';
 import { useNavigation } from '@react-navigation/native';
 import Lottie from 'lottie-react-native';
 import { TouchableOpacity, Text } from 'react-native';
-import { secondaryLight } from '../../../constants/colors';
 
 const Done = ({ ...props }) => (
     <TouchableOpacity
