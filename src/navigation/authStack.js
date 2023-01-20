@@ -1,7 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Loader from '../components/loader/loader';
-
 import SplashScreen from '../components/splashScreen';
 import LoginScreen from '../screens/startup/login';
 import SignupScreen from '../screens/startup/signup';
