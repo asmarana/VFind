@@ -90,7 +90,7 @@ const SplashScreen = () => {
             ])
                 .start();
 
-        }, 1200);
+        }, 3000);
 
     }, []);
 

@@ -45,15 +45,15 @@ const SignupScreen = ({ navigation }) => {
     if (!inputs.password) {
       handleError('Please input password', 'password');
       isValid = false;
-    } else if (inputs.password.length < 5) {
-      handleError('Minimum password length should be 5', 'password');
+    } else if (inputs.password.length <= 5) {
+      handleError('Minimum password length should be 6', 'password');
       isValid = false;
     }
 
     if (isValid) {
       setEmail(inputs.email)
       setPassword(inputs.password)
-      register(email, password)
+      register(inputs.email, inputs.password)
     }
   };
 
@@ -79,11 +79,11 @@ const SignupScreen = ({ navigation }) => {
           <BorderInput
             onChangeText={text => handleOnchange(text, 'email')}
             // onChangeText={(userEmail) => setEmail(userEmail)}
-            // onFocus={() => handleError(null, 'email')}
+            onFocus={() => handleError(null, 'email')}
             // iconName="email-outline"
             // label="Email"
             // placeholder="Enter your email address"
-            // error={errors.email}
+            error={errors.email}
             label="Email"
             // onChangeText={(userEmail) => setEmail(userEmail)}
             placeholder="Enter your email"
