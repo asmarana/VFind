@@ -1,5 +1,5 @@
 import React from 'react';
-import { View , Image} from 'react-native';
+import { View, Image } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Feather from 'react-native-vector-icons/Feather';
@@ -9,6 +9,7 @@ import { primary } from '../constants/colors';
 import ProfileScreen from '../screens/navbar/profileScreen';
 import ChatScreen from '../screens/navbar/chatScreen';
 import SearchScreen from '../screens/navbar/searchScreen';
+import Search from '../screens/navbar/searchScreen/search';
 import NotificationScreen from '../screens/navbar/notificationScreen';
 
 const Stack = createNativeStackNavigator();
@@ -16,12 +17,12 @@ const Tab = createBottomTabNavigator();
 
 const LogoHeader = () => (
     <View>
-      <Image
-        source={require('../assets/logo/greenLogo.png')}
-        style={{height : 35 , width : 68}}
-      />
+        <Image
+            source={require('../assets/logo/greenLogo.png')}
+            style={{ height: 35, width: 68 }}
+        />
     </View>
-  );
+);
 
 
 const SearchStack = () => (
@@ -31,7 +32,14 @@ const SearchStack = () => (
             component={SearchScreen}
             options={{
                 headerLeft: () => <LogoHeader />,
-                title : '',
+                title: '',
+            }}
+        />
+        <Stack.Screen
+            name="GoogleSearch"
+            component={Search}
+            options={{
+                headerShown: false,
             }}
         />
     </Stack.Navigator>
@@ -85,7 +93,7 @@ const FinderStack = () => {
 
     return (
         <Tab.Navigator
-        screenOptions={{
+            screenOptions={{
                 activeTintColor: primary,
             }}>
             <Tab.Screen

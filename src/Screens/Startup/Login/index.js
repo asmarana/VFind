@@ -23,16 +23,22 @@ const LoginScreen = ({ }) => {
   const validate = async () => {
     Keyboard.dismiss();
     let isValid = true;
-    // if (!inputs.email) {
-    //   handleError('Please input email', 'email');
-    //   isValid = false;
-    // }
-    // if (!inputs.password) {
-    //   handleError('Please input password', 'password');
-    //   isValid = false;
-    // }
+    if (!inputs.email) {
+      handleError('Please input email', 'email');
+      isValid = false;
+    }else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+      handleError('Please input a valid email', 'email');
+      isValid = false;
+    } 
+    if (!inputs.password) {
+      handleError('Please input password', 'password');
+      isValid = false;
+    } else if (inputs.password.length <= 5) {
+      handleError('Minimum password length should be 6', 'password');
+      isValid = false;
+    }
     if (isValid) {
-      login(email,password);
+      login(inputs.email,inputs.password);
     }
   };
 
@@ -56,11 +62,11 @@ const LoginScreen = ({ }) => {
         </Text>
         <View style={{ marginVertical: 20 }}>
           <BorderInput
-            // onChangeText={text => handleOnchange(text, 'email')}
-            // onFocus={() => handleError(null, 'email')}
-            // error={errors.email}
+            onChangeText={text => handleOnchange(text, 'email')}
+            onFocus={() => handleError(null, 'email')}
+            error={errors.email}
             label="Email"
-            onChangeText={(userEmail) => setEmail(userEmail)}
+            // onChangeText={(userEmail) => setEmail(userEmail)}
             placeholder="Enter your email"
             iconName="email-outline"
             keyboardType="email-address"
@@ -69,8 +75,8 @@ const LoginScreen = ({ }) => {
           />
 
           <BorderInput
-            onChangeText={(userPassword) => setPassword(userPassword)}
-            // onChangeText={text => handleOnchange(text, 'password')}
+            // onChangeText={(userPassword) => setPassword(userPassword)}
+            onChangeText={text => handleOnchange(text, 'password')}
             onFocus={() => handleError(null, 'password')}
             iconName="lock-outline"
             label="Password"
