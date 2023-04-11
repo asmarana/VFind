@@ -84,7 +84,7 @@ const VehicleForm = () => {
 
     const submitData = async () => {
         firestore()
-            .collection('vehicleData')
+            .collection('driverData')
             .add({
                 driverId: user.uid,
                 vehicleName: vehicleName,
