@@ -142,3 +142,89 @@ const DriverForm = () => {
 };
 
 export default DriverForm;
+
+
+// import React from 'react';
+// import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+// import { primary } from '../../../constants/colors';
+
+// const Button = ({ title, onPress }) => (
+//   <TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
+//     <View style={styles.button}>
+//       <Text style={styles.buttonText}>{title}</Text>
+//       <View style={styles.arrow} />
+//     </View>
+//   </TouchableOpacity>
+// );
+
+// const DriverForm= () => (
+//   <View style={styles.container}>
+//      <Text style={styles.text}>Driver Registration</Text>
+//      <Text style={styles.text}>اپنے آپ کو رجسٹر کروائیں</Text>
+//     <Button title="Basic Info" onPress={() => console.log("Button 1 pressed")} />
+//     <Button title="CNIC" onPress={() => console.log("Button 2 pressed")} />
+//     <Button title="License" onPress={() => console.log("Button 3 pressed")} />
+//     <Button title="Vehicle" onPress={() => console.log("Button 4 pressed")} />
+//     <TouchableOpacity style={styles.doneButton} onPress={() => console.log("Done pressed")}>
+//       <Text style={styles.doneButtonText}>Done</Text>
+//     </TouchableOpacity>
+//   </View>
+// );
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   buttonContainer: {
+//     marginVertical: 10,
+//     width: '80%',
+//   },
+//   button: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     justifyContent: 'space-between',
+//     paddingHorizontal: 20,
+//     paddingVertical: 15,
+//     backgroundColor: 'gray',
+//     borderRadius: 10,
+//   },
+//   buttonText: {
+//     fontSize: 18,
+//     fontWeight: 'bold',
+//     color: '#fff',
+//   },
+//   arrow: {
+//     width: 10,
+//     height: 10,
+//     borderTopWidth: 2,
+//     borderRightWidth: 2,
+//     borderColor: '#fff',
+//     transform: [{ rotate: '45deg' }],
+//   },
+//   doneButton: {
+//     marginTop: 20,
+//     padding: 15,
+//     backgroundColor: primary,
+//     borderRadius: 5,
+//     width:200,
+//     alignItems:'center',
+//     justifyContent:"center"
+
+//   },
+//   doneButtonText: {
+//     fontSize: 18,
+//     fontWeight: 'bold',
+//     color: '#fff',
+//   },
+//   text: {
+//     fontSize: 24,
+//     fontWeight: 'bold',
+//     color: '#333',
+//     textAlign: 'center',
+//   },
+// });
+
+// export default DriverForm;

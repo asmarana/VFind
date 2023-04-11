@@ -59,7 +59,7 @@ const RouteForm = () => {
 
     const submitData = async () => {
         firestore()
-            .collection('routeData')
+            .collection('driverData')
             .add({
                 driverId: user.uid,
                 pickupArea : pickupArea,
