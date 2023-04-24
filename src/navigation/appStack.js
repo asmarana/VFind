@@ -6,6 +6,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MapScreen from '../screens/navbar/mapScreen';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { primary, whiteplus } from '../constants/colors';
 import MapMenuScreen from '../screens/navbar/mapScreen/mapMenu';
 import ProfileScreen from '../screens/navbar/profileScreen';
@@ -40,17 +41,17 @@ const MapStack = ({ navigation }) => (
                     shadowColor: '#fff',
                     elevation: 0,
                 },
-                // headerRight: () => (
-                //     <View style={{ marginRight: 2 }}>
-                //         <FontAwesome5.Button
-                //             name="bars"
-                //             size={22}
-                //             backgroundColor="#fff"
-                //             color = {primary}
-                //             onPress={() => navigation.navigate('MapMenuScreen')}
-                //         />
-                //     </View>
-                // ),
+                headerRight: () => (
+                    <View>
+                        <FontAwesome5.Button
+                            name="bars"
+                            size={22}
+                            backgroundColor="#fff"
+                            color = {primary}
+                            onPress={() => navigation.navigate('DriverLocation')}
+                        />
+                    </View>
+                ),
             }}
         />
         <Stack.Screen
@@ -75,17 +76,7 @@ const MapStack = ({ navigation }) => (
     </Stack.Navigator>
 );
 
-const SearchStack = () => (
-    <Stack.Navigator>
-        <Stack.Screen
-            name="SearchScreen"
-            component={SearchScreen}
-            options={{
-                headerShown: false,
-            }}
-        />
-    </Stack.Navigator>
-);
+// s
 const ChatStack = () => (
     <Stack.Navigator>
         <Stack.Screen
@@ -135,8 +126,8 @@ const AppStack = () => {
 
     return (
         <Tab.Navigator   
-        // tabBarOptions = {{
-        //     activeTintColor: primary}}
+        tabBarOptions = {{
+            activeTintColor: primary}}
         screenOptions={{
                 activeTintColor: primary,
             }}
@@ -156,7 +147,7 @@ const AppStack = () => {
                     headerShown: false,
                 })}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="Search"
                 component={SearchStack}
                 options={({ route }) => ({
@@ -169,7 +160,7 @@ const AppStack = () => {
                         />
                     ),
                 })}
-            />
+            /> */}
             <Tab.Screen
                 name="Messages"
                 component={ChatStack}
