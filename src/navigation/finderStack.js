@@ -1,169 +1,170 @@
+// import React from 'react';
+// import { View, Image } from 'react-native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import Feather from 'react-native-vector-icons/Feather';
+// import SearchScreen from '../screens/navbar/searchScreen';
+// import Search from '../screens/navbar/searchScreen/search';
+// import {primary, white } from '../constants/colors';
+// import NotificationScreen from '../screens/navbar/notificationScreen';
+
+// const Stack = createNativeStackNavigator();
+
+// const LogoHeader = () => (
+//     <View>
+//         <Image
+//             source={require('../assets/logo/greenLogo.png')}
+//             style={{ height: 35, width: 68 }}
+//         />
+//     </View>
+// );
+
+
+// const SearchStack = () => (
+//     <Stack.Navigator>
+//         <Stack.Screen
+//             name="SearchScreen"
+//             component={SearchScreen}
+//             options={{
+//                 headerRight: () => <LogoHeader />,
+//                 title: '',
+//                 headerShown : true,
+//             headerTitleStyle:{
+//                 fontSize:20,
+//                 fontWeight:"bold",
+//                 color:"white",
+//             },
+//             headerLeft : () => <Feather name="menu" color={primary} size={24}/>
+//             }}
+//         />
+//         <Stack.Screen
+//             name="GoogleSearch"
+//             component={Search}
+//             options={{
+//                 headerShown: false,
+//             }}
+//         />
+//     </Stack.Navigator>
+// );
+
+// const FinderStack = () => {
+
+
+//     return (
+//         <SearchStack />
+//     );
+// };
+
+// export default FinderStack;
+
+
+
 import React from 'react';
 import { View, Image } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Feather from 'react-native-vector-icons/Feather';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
-// import AntDesign from 'react-native-vector-icons/AntDesign';
-// import { primary } from '../constants/colors';
-import ProfileScreen from '../screens/navbar/profileScreen';
-import ChatScreen from '../screens/navbar/chatScreen';
 import SearchScreen from '../screens/navbar/searchScreen';
 import Search from '../screens/navbar/searchScreen/search';
-import {primary, white } from '../constants/colors';
-import NotificationScreen from '../screens/navbar/notificationScreen';
+import ChatScreen from '../screens/navbar/chatScreen';
+import ProfileScreen from '../screens/navbar/profileScreen';
+import { primary, } from '../constants/colors';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import CustomDrawer from '../components/customDrawer';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import SettingScreen from '../screens/navbar/settingScreen';
 
+const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
-// const Tab = createBottomTabNavigator();
 
 const LogoHeader = () => (
     <View>
         <Image
             source={require('../assets/logo/greenLogo.png')}
-            style={{ height: 35, width: 68 }}
+            style={{ height: 35, width: 68, marginRight: 12 }}
         />
     </View>
 );
 
 
 const SearchStack = () => (
-    <Stack.Navigator>
-        <Stack.Screen
+    <Drawer.Navigator
+        drawerContent={props => <CustomDrawer {...props} />}
+        screenOptions={{
+            headerShown: false,
+            drawerActiveBackgroundColor: primary,
+            drawerActiveTintColor: '#fff',
+            drawerInactiveTintColor: '#333',
+            drawerLabelStyle: {
+                marginLeft: -25,
+                fontFamily: 'Roboto-Medium',
+                fontSize: 15,
+            },
+        }}>
+        <Drawer.Screen
             name="SearchScreen"
             component={SearchScreen}
             options={{
-                headerLeft: () => <LogoHeader />,
-                title: '',
-                headerShown : true,
-            // title : "VFind",
-            headerTitleStyle:{
-                fontSize:20,
-                fontWeight:"bold",
-                color:"white",
-            },
-            headerStyle:{
-                // backgroundColor:primary,
-                // height: 110,
-            },
-            headerRight : () => <Feather name="menu" color={primary} size={24}/>
+                drawerIcon: ({ color }) => (
+                    <Ionicons name="home-outline" size={22} color={color} />
+                ),
+                headerRight: () => <LogoHeader />,
+                title: 'Home',
+                headerShown: true,
+                headerTitleStyle: {
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    color: "white",
+                },
+                // headerLeft: () => <Feather name="menu" color={primary} size={24} />
             }}
         />
-        <Stack.Screen
-            name="GoogleSearch"
+        <Drawer.Screen
+            name="Search"
             component={Search}
             options={{
+                drawerIcon: ({ color }) => (
+                    <Ionicons name="search" size={22} color={color} />
+                ),
                 headerShown: false,
             }}
         />
-    </Stack.Navigator>
-);
-const ChatStack = () => (
-    <Stack.Navigator>
-        <Stack.Screen
-            name="ChatScreen"
+        <Drawer.Screen
+            name="Profile"
+            component={ProfileScreen}
+            options={{
+                drawerIcon: ({ color }) => (
+                    <Ionicons name="person-outline" size={22} color={color} />
+                ),
+                headerShown: false,
+            }}
+        />
+        <Drawer.Screen
+            name="Chat"
             component={ChatScreen}
             options={{
                 headerShown: false,
+                drawerIcon: ({ color }) => (
+                    <Ionicons name="chatbox-ellipses-outline" size={22} color={color} />
+                ),
             }}
         />
-    </Stack.Navigator>
-);
-const NotificationStack = () => (
-    <Stack.Navigator>
-        <Stack.Screen
-            name="NotificationScreen"
-            component={NotificationScreen}
+        <Drawer.Screen
+            name="Settings"
+            component={SettingScreen}
             options={{
-                headerShown: false,
+                drawerIcon: ({ color }) => (
+                    <Ionicons name="settings-outline" size={22} color={color} />
+                ),
             }}
         />
-    </Stack.Navigator>
-);
-
-const ProfileStack = ({ navigation }) => (
-    <Stack.Navigator>
-        <Stack.Screen
-            name="ProfileScreen"
-            component={ProfileScreen}
-            options={{
-                headerShown: false,
-            }}
-        />
-    </Stack.Navigator>
+    </Drawer.Navigator>
 );
 
 const FinderStack = () => {
-    const getTabBarVisibility = (route) => {
-        const routeName = route.state
-            ? route.state.routes[route.state.index].name
-            : '';
 
-        if (routeName === 'Chat') {
-            return false;
-        }
-        return true;
-    };
 
     return (
         <SearchStack />
-        // <Tab.Navigator
-        //     screenOptions={{
-        //         activeTintColor: primary,
-        //     }}>
-        //     <Tab.Screen
-        //         name="Search"
-        //         component={SearchStack}
-        //         options={({ route }) => ({
-        //             headerShown: false,
-        //             tabBarLabel: 'Search',
-        //             tabBarIcon: ({ color, size }) => (
-        //                 <Feather
-        //                     name="search"
-        //                     color={color}
-        //                     size={size}
-        //                 />
-        //             ),
-        //         })}
-        //     />
-        //     <Tab.Screen
-        //         name="Messages"
-        //         component={ChatStack}
-        //         options={({ route }) => ({
-        //             tabBarVisible: getTabBarVisibility(route),
-        //             tabBarIcon: ({ color, size }) => (
-        //                 <AntDesign
-        //                     name="message1"
-        //                     color={color}
-        //                     size={size}
-        //                 />
-        //             ),
-        //         })}
-        //     />
-        //     <Tab.Screen
-        //         name="Notification"
-        //         component={NotificationStack}
-        //         options={({ route }) => ({
-        //             tabBarVisible: getTabBarVisibility(route),
-        //             tabBarIcon: ({ color, size }) => (
-        //                 <Feather
-        //                     name="bell"
-        //                     color={color}
-        //                     size={size}
-        //                 />
-        //             ),
-        //         })}
-        //     />
-        //     <Tab.Screen
-        //         name="Profile"
-        //         component={ProfileStack}
-        //         options={{
-        //             // tabBarLabel: 'Home',
-        //             tabBarIcon: ({ color, size }) => (
-        //                 <Feather name="user" color={color} size={size} />
-        //             ),
-        //         }}
-        //     />
-        // </Tab.Navigator>
     );
 };
 

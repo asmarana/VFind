@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import MapView from 'react-native-maps'
 
@@ -6,15 +6,15 @@ import MapView from 'react-native-maps'
 const MapComponent = () => {
   return (
     <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      />
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: 33.7744,
+            longitude: 72.6996,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+          }}
+        />
     </View>
   )
 }
