@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, SafeAreaView, Keyboard, Alert } from 'react-native';
+import { View, Text, SafeAreaView, Keyboard, Alert, StyleSheet, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Lottie from 'lottie-react-native';
-import { primaryLight, secondary, whiteplus } from '../../../constants/colors';
+import { primaryLight, secondary, secondaryLight, whiteplus } from '../../../constants/colors';
 import Loader from '../../../components/loader/loader';
 import Button from '../../../components/button/button';
 import BorderInput from '../../../components/input/borderInput';
@@ -13,12 +14,12 @@ const LoginScreen = ({ }) => {
   const navigation = useNavigation();
 
   const [email, setEmail] = React.useState();
-  const [password,setPassword] = React.useState();
+  const [password, setPassword] = React.useState();
   const [inputs, setInputs] = React.useState({ email: '', password: '' });
   const [errors, setErrors] = React.useState({});
   const [loading, setLoading] = React.useState(false);
 
-  const {login} = useContext(AuthContext);
+  const { login, googleLogin } = useContext(AuthContext);
 
   const validate = async () => {
     Keyboard.dismiss();
@@ -26,10 +27,10 @@ const LoginScreen = ({ }) => {
     if (!inputs.email) {
       handleError('Please input email', 'email');
       isValid = false;
-    }else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+    } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
       handleError('Please input a valid email', 'email');
       isValid = false;
-    } 
+    }
     if (!inputs.password) {
       handleError('Please input password', 'password');
       isValid = false;
@@ -38,7 +39,7 @@ const LoginScreen = ({ }) => {
       isValid = false;
     }
     if (isValid) {
-      login(inputs.email,inputs.password);
+      login(inputs.email, inputs.password);
     }
   };
 
@@ -53,11 +54,11 @@ const LoginScreen = ({ }) => {
   return (
     <SafeAreaView style={{ backgroundColor: whiteplus, flex: 1 }}>
       <Loader visible={loading} />
-      <View style={{ paddingTop: 120, paddingHorizontal: 20 }}>
+      <View style={{ paddingTop: 100, paddingHorizontal: 20 }}>
         <Text style={{ color: secondary, fontSize: 40, fontWeight: 'bold' }}>
           Log In
         </Text>
-        <Text style={{color:primaryLight, fontSize: 18, marginVertical: 10}}>
+        <Text style={{ color: primaryLight, fontSize: 18, marginVertical: 10 }}>
           Enter Your Details to Login
         </Text>
         <View style={{ marginVertical: 20 }}>
@@ -85,6 +86,41 @@ const LoginScreen = ({ }) => {
             password
           />
           <Button label=" Log in" onPress={validate} />
+          <View style={styles.lineContainer}>
+            <View style={styles.line} />
+            <Text style={styles.orLoginWithText}>Or Login With</Text>
+            <View style={styles.line} />
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity
+            onPress={() => googleLogin()}
+              style={{
+                backgroundColor: '#4d9dff',
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                borderRadius: 10,
+                marginRight: 10,
+              }}
+            >
+              <Icon name="google" color="#fff" size={20} style={{ marginRight: 10 }} />
+              <Text style={{ color: '#fff', fontWeight: 'bold' }}>Login with Google</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#82ca9d',
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                borderRadius: 10,
+              }}
+            >
+              <Icon name="phone" color="#fff" size={20} style={{ marginRight: 10 }} />
+              <Text style={{ color: '#fff', fontWeight: 'bold' }}>Login with Phone</Text>
+            </TouchableOpacity>
+          </View>
           <Text
             onPress={() => navigation.navigate('SignupScreen')}
             style={{
@@ -92,6 +128,7 @@ const LoginScreen = ({ }) => {
               fontWeight: 'bold',
               textAlign: 'center',
               fontSize: 16,
+              marginTop:30,
             }}>
             Don't have account ?Register
           </Text>
@@ -102,3 +139,24 @@ const LoginScreen = ({ }) => {
 };
 
 export default LoginScreen;
+
+const styles = StyleSheet.create({
+  lineContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    marginVertical: 10,
+  },
+  line: {
+    borderBottomColor: 'grey',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    flex: 1,
+  },
+  orLoginWithText: {
+    marginHorizontal: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: secondaryLight
+  },
+
+});

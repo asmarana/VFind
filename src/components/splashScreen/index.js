@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { primary, whiteplus } from '../../constants/colors';
 import OnboardingScreen from '../../screens/startup/onboarding';
 import LoginScreen from '../../screens/startup/login';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import Logo from '../../assets/logo/greenLogo.png';
 
@@ -103,6 +104,11 @@ const SplashScreen = () => {
                 setIsFirstLaunch(false);
             }
         });
+
+        GoogleSignin.configure({
+            webClientId: '653280965619-ugosn17khi56ku843393kq4o9ia0vll3.apps.googleusercontent.com',
+          });
+
     }, []);
 
     if (isFirstLaunch == null) {

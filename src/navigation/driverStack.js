@@ -10,6 +10,7 @@ import RouteForm from '../screens/startup/driverRegistration/driverform';
 import FinderStack from './finderStack';
 import DriverRegistration from '../screens/startup/driverRegistration';
 import DriverLocation from '../screens/navbar/mapScreen/driverLocation';
+import MapComponent from '../components/map';
 
 const Stack =  createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ const DriverStack = () => {
                 <Stack.Screen name="AppStack" component={AppStack} options={{header: () => null}} />
                 <Stack.Screen name="DriverLocation" component={DriverLocation} options={{header: () => null}} />
                 <Stack.Screen name="FinderStack" component={FinderStack} options={{header: () => null}} />
+                <Stack.Screen name="Maps" component={MapComponent} options={{header: () => null}} />
             </Stack.Navigator>
         </>
   );
