@@ -1,5 +1,5 @@
 import React from 'react';
-import { View , Image} from 'react-native';
+import { View, Image } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Feather from 'react-native-vector-icons/Feather';
@@ -7,24 +7,26 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MapScreen from '../screens/navbar/mapScreen';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { primary, whiteplus } from '../constants/colors';
+import { primary, secondary, whiteplus } from '../constants/colors';
 import MapMenuScreen from '../screens/navbar/mapScreen/mapMenu';
 import ProfileScreen from '../screens/navbar/profileScreen';
 import ChatScreen from '../screens/navbar/chatScreen';
+import MessagesScreen from '../screens/navbar/chatScreen/messagesScreen';
 import SearchScreen from '../screens/navbar/searchScreen';
 import NotificationScreen from '../screens/navbar/notificationScreen';
+import GenerateNotification from '../screens/navbar/notificationScreen/generateNotification';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const LogoHeader = () => (
     <View>
-      <Image
-        source={require('../assets/logo/greenLogo.png')}
-        style={{height : 35 , width : 68}}
-      />
+        <Image
+            source={require('../assets/logo/greenLogo.png')}
+            style={{ height: 35, width: 68 }}
+        />
     </View>
-  );
+);
 
 const MapStack = ({ navigation }) => (
     <Stack.Navigator>
@@ -33,7 +35,7 @@ const MapStack = ({ navigation }) => (
             component={MapScreen}
             options={{
                 headerLeft: () => <LogoHeader />,
-                title : '',
+                title: '',
                 // headerTitleStyle: {
                 //     color: primary,
                 // },
@@ -47,7 +49,7 @@ const MapStack = ({ navigation }) => (
                             name="bars"
                             size={22}
                             backgroundColor="#fff"
-                            color = {primary}
+                            color={primary}
                             onPress={() => navigation.navigate('DriverLocation')}
                         />
                     </View>
@@ -76,27 +78,43 @@ const MapStack = ({ navigation }) => (
     </Stack.Navigator>
 );
 
-// s
-const ChatStack = () => (
+const MessageStack = ({ navigation }) => (
+    
     <Stack.Navigator>
+        <Stack.Screen name="Messages" component={MessagesScreen}/>
         <Stack.Screen
-            name="ChatScreen"
+            name="Chat"
             component={ChatScreen}
-            options={{
-                headerShown: false,
-            }}
+            options={({ route }) => ({
+                title: route.params.userName,
+                tabBarVisible: false,
+                headerBackTitleVisible: false,
+            })}
         />
     </Stack.Navigator>
 );
-const NotificationStack = () => (
+
+const NotificationStack = ({navigation}) => (
     <Stack.Navigator>
         <Stack.Screen
-            name="NotificationScreen"
+            name="Notification"
             component={NotificationScreen}
             options={{
-                headerShown: false,
+                // headerShown: false,
+                headerRight: () => (
+                    <View>
+                        <FontAwesome5.Button
+                            name="plus"
+                            size={22}
+                            backgroundColor="#fff"
+                            color={secondary}
+                            onPress={() => navigation.navigate('Notifications')}
+                        />
+                    </View>
+                ),
             }}
         />
+        <Stack.Screen name="Notifications" component={GenerateNotification}/>
     </Stack.Navigator>
 );
 
@@ -113,25 +131,26 @@ const ProfileStack = ({ navigation }) => (
 );
 
 const AppStack = () => {
+
     const getTabBarVisibility = (route) => {
         const routeName = route.state
             ? route.state.routes[route.state.index].name
             : '';
-
-        if (routeName === 'Chat') {
+    
+        if (routeName === 'ChatF') {
             return false;
         }
         return true;
     };
-
     return (
-        <Tab.Navigator   
-        tabBarOptions = {{
-            activeTintColor: primary}}
-        screenOptions={{
+        <Tab.Navigator
+            tabBarOptions={{
+                activeTintColor: primary
+            }}
+            screenOptions={{
                 activeTintColor: primary,
             }}
-            >
+        >
             <Tab.Screen
                 name="V Find"
                 component={MapStack}
@@ -147,28 +166,16 @@ const AppStack = () => {
                     headerShown: false,
                 })}
             />
-            {/* <Tab.Screen
-                name="Search"
-                component={SearchStack}
-                options={({ route }) => ({
-                    tabBarLabel: 'Search',
-                    tabBarIcon: ({ color, size }) => (
-                        <Feather
-                            name="search"
-                            color={color}
-                            size={size}
-                        />
-                    ),
-                })}
-            /> */}
+
             <Tab.Screen
                 name="Messages"
-                component={ChatStack}
+                component={MessageStack}
                 options={({ route }) => ({
+                    headerShown: false,
                     tabBarVisible: getTabBarVisibility(route),
                     tabBarIcon: ({ color, size }) => (
-                        <AntDesign
-                            name="message1"
+                        <Ionicons
+                            name="chatbox-ellipses-outline"
                             color={color}
                             size={size}
                         />
@@ -179,6 +186,7 @@ const AppStack = () => {
                 name="Notification"
                 component={NotificationStack}
                 options={({ route }) => ({
+                    headerShown:false,
                     tabBarVisible: getTabBarVisibility(route),
                     tabBarIcon: ({ color, size }) => (
                         <Feather

@@ -12,7 +12,7 @@ const HomeSearch = () => {
   return (
     <View>
       {/*  Input Box */}
-      <Pressable onPress={() => navigation.navigate("GoogleSearch")} style={styles.inputBox}>
+      {/* <Pressable onPress={() => navigation.navigate("GoogleSearch")} style={styles.inputBox}>
         <Text style={styles.inputText}>Search</Text>
 
         <View style={styles.timeContainer}>
@@ -20,11 +20,11 @@ const HomeSearch = () => {
           <Text style={{ color: '#535353' }}>Now</Text>
           <MaterialIcons name={'keyboard-arrow-down'} size={16} color={'#535353'} />
         </View>
-      </Pressable>
-      {/* <Pressable onPress={() => navigation.navigate("GoogleSearch")} style={styles.buttonContainer}>
+      </Pressable> */}
+      <Pressable onPress={() => navigation.navigate("Search")} style={styles.buttonContainer}>
         <Feather name="search" size={24} color="white" style={styles.buttonIcon} />
         <Text style={styles.buttonText}>Search</Text>
-      </Pressable> */}
+      </Pressable>
 
       {/* School destination */}
       <View style={styles.row}>
