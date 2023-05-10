@@ -2,7 +2,7 @@ import { StyleSheet, Text, View,} from 'react-native'
 import React from 'react'
 import { primary, whiteplus } from '../../constants/colors'
 
-const Message = () => {
+const FullMessage = () => {
   return (
     <View style={styles.container}>
       {/* <ImageBackground
@@ -14,30 +14,29 @@ const Message = () => {
       <Text style={styles.text}>
       VFind is a solution to parents to create a safe and efficient school transportation system. We provide GPS tracking solutions to ensure student safety to and from their schools. VFind provides real-time location of the School Cab to parents.
       </Text>
-      <Text style={styles.learnMore}>Learn more</Text>
       {/* </ImageBackground> */}
     </View>
 
   )
 }
 
-export default Message
+export default FullMessage
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: primary,
+    // backgroundColor: primary,
     padding: 15,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
   title: {
-    color: 'white',
+    color: 'black',
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
   },
   text: {
-    color: whiteplus,
+    color: 'black',
     fontSize: 15,
     marginBottom: 10,
   },

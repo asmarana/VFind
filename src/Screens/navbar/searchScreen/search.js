@@ -13,6 +13,7 @@ import {
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import firestore from '@react-native-firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
 import { grey, whiteplus, white, primary, secondary, secondaryLight } from '../../../constants/colors';
 
 const Search = ({ searchResult, index }) => {
@@ -23,6 +24,8 @@ const Search = ({ searchResult, index }) => {
   const [isRequested, setIsRequested] = useState(false);
   const [requestSent, setRequestSent] = useState(false);
 
+  const navigation = useNavigation();
+
 
 
   const handleSendRequest = () => {
@@ -32,7 +35,7 @@ const Search = ({ searchResult, index }) => {
   const handleResetRequest = () => {
     setRequestSent(false);
   }
-  
+
 
   useEffect(() => {
     if (searchSchool.length > 0) {
@@ -85,7 +88,8 @@ const Search = ({ searchResult, index }) => {
             <View style={styles.resultContainer}>
               {searchResults.map((result) => (
                 <View style={styles.searchResultContainer}>
-                  <TouchableOpacity key={result.driverId}>
+                  <TouchableOpacity key={result.driverId}
+                    onPress={() => navigation.navigate('DriverProfile')}>
                     <View style={styles.searchResultItem}>
                       <Image style={styles.resultImage} source={{ uri: result.PhotoURL }} />
                       <View style={styles.resultTextContainer}>
@@ -182,8 +186,8 @@ const styles = StyleSheet.create({
     padding: 20,
     shadowColor: '#000',
     shadowOffset: {
-        width: 0,
-        height: 2,
+      width: 0,
+      height: 2,
     },
     shadowOpacity: 0.5,
     shadowRadius: 1.84,

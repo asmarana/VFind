@@ -71,7 +71,10 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import CustomDrawer from '../components/customDrawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import SettingScreen from '../screens/navbar/settingScreen';
+import AboutScreen from '../screens/navbar/aboutScreen';
+import FeedbackScreen from '../screens/navbar/feedbackScreen';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -129,22 +132,22 @@ const SearchStack = () => (
             }}
         />
         <Drawer.Screen
-            name="Profile"
-            component={ProfileScreen}
+            name="About"
+            component={AboutScreen}
             options={{
                 drawerIcon: ({ color }) => (
-                    <Ionicons name="person-outline" size={22} color={color} />
+                    <Ionicons name="information-circle-outline" size={22} color={color} />
                 ),
                 headerShown: false,
             }}
         />
         <Drawer.Screen
-            name="Chat"
-            component={ChatScreen}
+            name="Feedback"
+            component={FeedbackScreen}
             options={{
                 headerShown: false,
                 drawerIcon: ({ color }) => (
-                    <Ionicons name="chatbox-ellipses-outline" size={22} color={color} />
+                    <MaterialIcons name="feedback" size={22} color={color} />
                 ),
             }}
         />

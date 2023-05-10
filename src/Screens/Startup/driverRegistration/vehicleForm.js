@@ -176,7 +176,7 @@ const VehicleForm = () => {
                 </View>
             </ScrollView>
             <View style={{ paddingHorizontal: 20 }}>
-                <Button label="Next" onPress={validate} />
+                <Button label="Submit" onPress={validate} />
             </View>
         </SafeAreaView >
     );

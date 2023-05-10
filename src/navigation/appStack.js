@@ -125,6 +125,17 @@ const ProfileStack = ({ navigation }) => (
             component={ProfileScreen}
             options={{
                 headerShown: false,
+                // headerRight: () => (
+                //     <View>
+                //         <FontAwesome5.Button
+                //             name="plus"
+                //             size={22}
+                //             backgroundColor="#fff"
+                //             color={secondary}
+                //             onPress={() => navigation.navigate('Notifications')}
+                //         />
+                //     </View>
+                // ),
             }}
         />
     </Stack.Navigator>
@@ -201,6 +212,7 @@ const AppStack = () => {
                 name="Profile"
                 component={ProfileStack}
                 options={{
+                    headerShown:false,
                     // tabBarLabel: 'Home',
                     tabBarIcon: ({ color, size }) => (
                         <Feather name="user" color={color} size={size} />

@@ -31,7 +31,7 @@ const CustomDrawer = props => {
           source={require('../../assets/menu.png')}
           style={{ padding: 20 }}>
           <Image
-            source={require('../../assets/imgg.jpg')}
+            source={require('../../assets/img3.jpg')}
             style={{ height: 80, width: 80, borderRadius: 40, marginBottom: 10 }}
           />
           <Text style={{ color: '#fff', fontSize: 18, fontFamily: 'Roboto-Medium', marginBottom: 5, }}>Welcome</Text>

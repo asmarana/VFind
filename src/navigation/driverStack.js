@@ -5,12 +5,14 @@ import SplashScreen from '../components/splashScreen';
 import UserTypeScreen from '../screens/startup/userType';
 import AppStack from './appStack';
 import DriverForm from '../screens/startup/driverRegistration/driverform';
-import VehicleForm from '../screens/startup/driverRegistration/driverform';
-import RouteForm from '../screens/startup/driverRegistration/driverform';
+import VehicleForm from '../screens/startup/driverRegistration/vehicleForm';
+import RouteForm from '../screens/startup/driverRegistration/routeForm';
 import FinderStack from './finderStack';
 import DriverRegistration from '../screens/startup/driverRegistration';
 import DriverLocation from '../screens/navbar/mapScreen/driverLocation';
 import MapComponent from '../components/map';
+import DriverProfile from '../screens/navbar/profileScreen/driverProfile';
+import GetStarted from '../screens/startup/getStarted';
 
 const Stack =  createNativeStackNavigator();
 
@@ -31,6 +33,8 @@ const DriverStack = () => {
                 <Stack.Screen name="DriverLocation" component={DriverLocation} options={{header: () => null}} />
                 <Stack.Screen name="FinderStack" component={FinderStack} options={{header: () => null}} />
                 <Stack.Screen name="Maps" component={MapComponent} options={{header: () => null}} />
+                <Stack.Screen name="DriverProfile" component={DriverProfile} options={{header: () => null}} />
+                <Stack.Screen name="GetStarted" component={GetStarted} options={{header: () => null}} />
             </Stack.Navigator>
         </>
   );

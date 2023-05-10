@@ -126,7 +126,7 @@ const ChatScreen = () => {
     setMessages([
       {
         _id: 1,
-        text: 'Hello',
+        text: 'Could you let me know estimated arrival time?',
         createdAt: new Date(),
         user: {
           _id: 2,
@@ -136,7 +136,7 @@ const ChatScreen = () => {
       },
       {
         _id: 2,
-        text: 'Hello driver',
+        text: 'Hello',
         createdAt: new Date(),
         user: {
           _id: 1,
