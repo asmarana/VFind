@@ -20,10 +20,10 @@ const DriverRegistration = ({navigation}) => {
             <View style={styles.Container}>
                 <Text style={styles.heading1}>Driver Registration</Text>
                 <Text style={styles.heading2}>اپنے آپ کو رجسٹر کروائیں</Text>
-                <Button title="Basic Info" onPress={() => navigation.navigate('DriverInfoForm')} />
-                <Button title="CNIC" onPress={() => console.log("Button 2 pressed")} />
-                <Button title="License" onPress={() => console.log("Button 3 pressed")} />
-                <Button title="Vehicle" onPress={() => console.log("Button 4 pressed")} />
+                <Button title="Basic Info(بنیادی معلومات)" onPress={() => navigation.navigate('DriverInfoForm')} />
+                <Button title="CNIC (شناختی کارڈ) " onPress={() => console.log("Button 2 pressed")} />
+                <Button title="License(ڈرائیونگ لائسنس)" onPress={() => console.log("Button 3 pressed")} />
+                <Button title="Vehicle (گاڑی کی معلومات) " onPress={() => navigation.navigate('VehicleInfoScreen')} />
                 <TouchableOpacity style={styles.doneButton} onPress={() => navigation.navigate('AppStack')}>
                     <Text style={styles.doneButtonText}>Done</Text>
                 </TouchableOpacity>

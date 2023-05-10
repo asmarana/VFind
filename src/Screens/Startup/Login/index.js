@@ -3,12 +3,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, SafeAreaView, Keyboard, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Lottie from 'lottie-react-native';
 import { primaryLight, secondary, secondaryLight, whiteplus } from '../../../constants/colors';
 import Loader from '../../../components/loader/loader';
 import Button from '../../../components/button/button';
 import BorderInput from '../../../components/input/borderInput';
 import { AuthContext } from '../../../navigation/authProvider';
+import Logo from '../../../components/logo';
 
 const LoginScreen = ({ }) => {
   const navigation = useNavigation();
@@ -54,7 +54,10 @@ const LoginScreen = ({ }) => {
   return (
     <SafeAreaView style={{ backgroundColor: whiteplus, flex: 1 }}>
       <Loader visible={loading} />
-      <View style={{ paddingTop: 100, paddingHorizontal: 20 }}>
+      <View style={{ marginTop: '15%' }}>
+        <Logo />
+      </View>
+      <View style={{ paddingHorizontal: 20 }}>
         <Text style={{ color: secondary, fontSize: 40, fontWeight: 'bold' }}>
           Log In
         </Text>
@@ -91,16 +94,16 @@ const LoginScreen = ({ }) => {
             <Text style={styles.orLoginWithText}>Or Login With</Text>
             <View style={styles.line} />
           </View>
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row' , alignItems:'center', justifyContent:'center'}}>
             <TouchableOpacity
-            onPress={() => googleLogin()}
+              onPress={() => googleLogin()}
               style={{
                 backgroundColor: '#4d9dff',
                 flexDirection: 'row',
                 alignItems: 'center',
                 paddingVertical: 10,
-                paddingHorizontal: 20,
-                borderRadius: 10,
+                paddingHorizontal: 15,
+                borderRadius: 2.9,
                 marginRight: 10,
               }}
             >
@@ -113,8 +116,8 @@ const LoginScreen = ({ }) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 paddingVertical: 10,
-                paddingHorizontal: 20,
-                borderRadius: 10,
+                paddingHorizontal: 15,
+                borderRadius: 2.9,
               }}
             >
               <Icon name="phone" color="#fff" size={20} style={{ marginRight: 10 }} />
@@ -128,7 +131,7 @@ const LoginScreen = ({ }) => {
               fontWeight: 'bold',
               textAlign: 'center',
               fontSize: 16,
-              marginTop:30,
+              marginTop: 30,
             }}>
             Don't have account ?Register
           </Text>
@@ -145,7 +148,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
-    marginVertical: 10,
+    marginBottom:10,
   },
   line: {
     borderBottomColor: 'grey',

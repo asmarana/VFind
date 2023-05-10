@@ -1,37 +1,37 @@
 import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, TouchableOpacity } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Feather from "react-native-vector-icons/Feather"
 import Entypo from "react-native-vector-icons/Entypo";
 import { useNavigation } from '@react-navigation/native'
-import { primary } from "../../constants/colors";
+import { primary, primaryLight, secondaryLight,grey } from "../../constants/colors";
 
 const HomeSearch = () => {
   const navigation = useNavigation();
   return (
     <View>
       {/*  Input Box */}
-      {/* <Pressable onPress={() => navigation.navigate("GoogleSearch")} style={styles.inputBox}>
+      <Pressable onPress={() => navigation.navigate("Search")} style={styles.inputBox}>
         <Text style={styles.inputText}>Search</Text>
 
         <View style={styles.timeContainer}>
-          <AntDesign name={'clockcircle'} size={16} color={'#535353'} />
-          <Text style={{ color: '#535353' }}>Now</Text>
-          <MaterialIcons name={'keyboard-arrow-down'} size={16} color={'#535353'} />
+          <AntDesign name={'search1'} size={16} color={'#535353'} />
+          {/* <Text style={{ color: '#535353' }}>Now</Text> */}
+          {/* <MaterialIcons name={'keyboard-arrow-down'} size={16} color={'#535353'} /> */}
         </View>
-      </Pressable> */}
-      <Pressable onPress={() => navigation.navigate("Search")} style={styles.buttonContainer}>
-        <Feather name="search" size={24} color="white" style={styles.buttonIcon} />
-        <Text style={styles.buttonText}>Search</Text>
       </Pressable>
+      {/* <Pressable onPress={() => navigation.navigate("Search")} style={styles.buttonContainer}>
+        <Feather name="search" size={24} color={secondaryLight} style={styles.buttonIcon} />
+        <Text style={styles.buttonText}>Search</Text>
+      </Pressable> */}
 
       {/* School destination */}
       <View style={styles.row}>
         <View style={styles.iconContainer}>
           <AntDesign name={'clockcircle'} size={20} color={'#ffffff'} />
         </View>
-        <Text style={styles.destinationText}>School</Text>
+        <Text  onPress={() => navigation.navigate("Maps")} style={styles.destinationText}>School</Text>
       </View>
 
       {/* Home destination */}
@@ -62,12 +62,12 @@ const styles = StyleSheet.create({
     color: '#434343',
   },
   timeContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: 100,
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    width: 38,
     padding: 10,
     backgroundColor: '#fff',
-    borderRadius: 50
+    borderRadius: 80
   },
 
   row: {
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     color: '#535353'
   },
   buttonContainer: {
-    backgroundColor: primary,
+    backgroundColor: grey,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   buttonText: {
-    color: 'white',
+    color:secondaryLight,
     fontSize: 18,
     fontWeight: 'bold',
   },
