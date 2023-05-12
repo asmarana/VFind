@@ -8,7 +8,7 @@ import { AuthContext } from '../../navigation/authProvider';
 import auth from '@react-native-firebase/auth';
 
 const CustomDrawer = props => {
-  const { user, logout } = useContext(AuthContext);
+  const {logout } = useContext(AuthContext);
   const [userEmail, setUserEmail] = useState(null);
 
   useEffect(() => {

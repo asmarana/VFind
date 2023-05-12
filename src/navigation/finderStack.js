@@ -1,74 +1,10 @@
-// import React from 'react';
-// import { View, Image } from 'react-native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import Feather from 'react-native-vector-icons/Feather';
-// import SearchScreen from '../screens/navbar/searchScreen';
-// import Search from '../screens/navbar/searchScreen/search';
-// import {primary, white } from '../constants/colors';
-// import NotificationScreen from '../screens/navbar/notificationScreen';
-
-// const Stack = createNativeStackNavigator();
-
-// const LogoHeader = () => (
-//     <View>
-//         <Image
-//             source={require('../assets/logo/greenLogo.png')}
-//             style={{ height: 35, width: 68 }}
-//         />
-//     </View>
-// );
-
-
-// const SearchStack = () => (
-//     <Stack.Navigator>
-//         <Stack.Screen
-//             name="SearchScreen"
-//             component={SearchScreen}
-//             options={{
-//                 headerRight: () => <LogoHeader />,
-//                 title: '',
-//                 headerShown : true,
-//             headerTitleStyle:{
-//                 fontSize:20,
-//                 fontWeight:"bold",
-//                 color:"white",
-//             },
-//             headerLeft : () => <Feather name="menu" color={primary} size={24}/>
-//             }}
-//         />
-//         <Stack.Screen
-//             name="GoogleSearch"
-//             component={Search}
-//             options={{
-//                 headerShown: false,
-//             }}
-//         />
-//     </Stack.Navigator>
-// );
-
-// const FinderStack = () => {
-
-
-//     return (
-//         <SearchStack />
-//     );
-// };
-
-// export default FinderStack;
-
-
-
 import React from 'react';
 import { View, Image } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Feather from 'react-native-vector-icons/Feather';
 import SearchScreen from '../screens/navbar/searchScreen';
 import Search from '../screens/navbar/searchScreen/search';
-import ChatScreen from '../screens/navbar/chatScreen';
-import ProfileScreen from '../screens/navbar/profileScreen';
 import { primary, } from '../constants/colors';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
 import CustomDrawer from '../components/customDrawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -77,7 +13,6 @@ import AboutScreen from '../screens/navbar/aboutScreen';
 import FeedbackScreen from '../screens/navbar/feedbackScreen';
 
 const Drawer = createDrawerNavigator();
-const Stack = createNativeStackNavigator();
 
 const LogoHeader = () => (
     <View>
