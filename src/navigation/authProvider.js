@@ -22,10 +22,16 @@ export const AuthProvider = ({ children }) => {
                 login: async (email, password) => {
                     try {
                         await auth().signInWithEmailAndPassword(email, password);
-                        const userType = await AsyncStorage.getItem('userType');
-                        if (userType) {
-                            setUser({ ...user, userType });
-                        }
+                        // then((response) => {
+                        //     const token = response.user._user.uid; // access the user ID token
+                        //     console.log("Token:",token);
+                        //   })
+                        // const userType = await AsyncStorage.getItem('userType');
+                        // if (userType) {
+                        //     setUser({ ...user, userType });
+                        // }
+                        const idTokenResult = await firebase.auth().currentUser.getIdTokenResult();
+                        console.log('User JWT: ', idTokenResult.token);
                     } catch (e) {
                         console.log(e);
                     }
@@ -67,15 +73,29 @@ export const AuthProvider = ({ children }) => {
                         console.log({ error });
                     }
                 },
-
                 register: async (email, password) => {
                     try {
-                        await auth().createUserWithEmailAndPassword(email, password);
-                        handleUserTypeSelect(null);
+                        const userCredential = await auth().createUserWithEmailAndPassword(email, password);
+                        const user = userCredential.user;
+                        const idToken = await user.getIdToken(); // get the user ID token
+                        console.log(idToken); // log the user ID token to the console
+                        handleUserTypeSelect(null); // call a function to handle user type selection
                     } catch (e) {
-                        console.log(e);
+                        console.log(e); // log any errors that occur during registration
                     }
                 },
+                // register: async (email, password) => {
+                //     try {
+                //         await auth().createUserWithEmailAndPassword(email, password);
+                //         then((response) => {
+                //             const token = response.user._user.uid; // access the user ID token
+                //             console.log("Token:",token);
+                //           })
+                //         handleUserTypeSelect(null);
+                //     } catch (e) {
+                //         console.log(e);
+                //     }
+                // },
                 logout: async () => {
                     try {
                         await auth().signOut();

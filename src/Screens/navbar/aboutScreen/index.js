@@ -11,12 +11,15 @@ import Background from '../../../components/background';
 const AboutScreen = () => {
   const [notificationText, setNotificationText] = useState('');
   return (
-    <View style={{ flex: 1, padding: 20 }}>
-        <Background>
-      <Slider/>
-      <FullMessage/>
-      </Background>
-    </View>
+    <Background>
+      <View style={{ flex: 1, padding: 10 ,justifyContent:'space-evenly'}}>
+        <View style={{ alignItems:'center'}}>
+        <Text style={{ fontSize: 39, fontWeight: 'bold', marginLeft:20, color:'black' }}>About</Text>
+        </View>
+        <Slider />
+        <FullMessage/>
+      </View>
+    </Background>
   );
 };
 
