@@ -13,7 +13,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-var client = db.Dbconnect()
+var mongoClient = db.Dbconnect()
 
 var RegisterUser = http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 	var user models.User
@@ -22,7 +22,7 @@ var RegisterUser = http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request
 		middlewares.ServerErrResponse(err.Error(), rw)
 		return
 	}
-	collection := client.Database("vfind").Collection("users")
+	collection := mongoClient.Database("vfind").Collection("users")
 	var existingUser models.User
 
 	err = collection.FindOne(r.Context(), bson.D{primitive.E{Key: "email", Value: user.Email}}).Decode(&existingUser)
@@ -63,7 +63,7 @@ var LoginUser = http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 		middlewares.ServerErrResponse(err.Error(), rw)
 		return
 	}
-	collection := client.Database("vfind").Collection("users")
+	collection := mongoClient.Database("vfind").Collection("users")
 	var existingUser models.User
 	// if len(user.Username) > 0 {
 	// err = collection.FindOne(r.Context(), bson.D{primitive.E{Key: "username", Value: user.Username}}).Decode(&existingUser)
@@ -94,7 +94,7 @@ var LoginUser = http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 
 // 	userID, _ := primitive.ObjectIDFromHex(params["id"])
 
-// 	collection := client.Database("sodality").Collection("users")
+// 	collection := mongoClient.Database("sodality").Collection("users")
 // 	err := collection.FindOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: userID}}).Decode(&user)
 // 	if err != nil {
 // 		if err == mongo.ErrNoDocuments {
@@ -117,7 +117,7 @@ var LoginUser = http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 // 	var user models.User
 
 // 	userID, _ := primitive.ObjectIDFromHex(props["user_id"].(string))
-// 	collection := client.Database("sodality").Collection("users")
+// 	collection := mongoClient.Database("sodality").Collection("users")
 // 	err := collection.FindOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: userID}}).Decode(&user)
 // 	if err != nil {
 // 		if err == mongo.ErrNoDocuments {
@@ -141,7 +141,7 @@ var LoginUser = http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 
 // 	userID, _ := primitive.ObjectIDFromHex(props["user_id"].(string))
 
-// 	collection := client.Database("sodality").Collection("users")
+// 	collection := mongoClient.Database("sodality").Collection("users")
 // 	err := collection.FindOne(r.Context(), bson.D{primitive.E{Key: "_id", Value: userID}}).Decode(&user)
 // 	if err != nil {
 // 		middlewares.AuthorizationResponse("malformed token", rw)

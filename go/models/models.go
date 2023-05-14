@@ -177,3 +177,13 @@ type GenerateAuthURL struct {
 	OTPSecret string `json:"otp_secret,omitempty" bson:"otp_secret,omitempty"`
 	URL       string `json:"otpauth_url,omitempty" bson:"otpauth_url,omitempty"`
 }
+
+type Subscribe struct {
+	Token []string `json:"token" bson:"token"`
+	Topic string   `json:"topic" bson:"topic"`
+}
+
+type Send struct {
+	Message string `json:"message" bson:"message"`
+	Topic   string `json:"topic" bson:"topic"`
+}
