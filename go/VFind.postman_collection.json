@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "1699d09e-26ae-4937-9ab5-af83fdf1b8e3",
+		"name": "VFind",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17385921"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"omerkhan01234@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/user/register",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"omerkhan01234@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/user/login",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subscribe",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"token\": [\n        \"fAnI0uonSoW_bU9kZxJA5L:APA91bGDVMc16BeSvcoCHBHHnnO9Bvgmzg_anMxDkAvhfCOYhNerFR2iY5CJHi0KXvICdM7vOhQKQD91EIeLXRuajCXPwnoqSE6-FsfjUCUt74Bf9ccOQEWL9B-MKuVmYGawLBpDRpTX\"\n    ],\n    \"topic\": \"vfind\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/user/subscribe",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"user",
+						"subscribe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unsubscribe",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"token\": [\n        \"fAnI0uonSoW_bU9kZxJA5L:APA91bGDVMc16BeSvcoCHBHHnnO9Bvgmzg_anMxDkAvhfCOYhNerFR2iY5CJHi0KXvICdM7vOhQKQD91EIeLXRuajCXPwnoqSE6-FsfjUCUt74Bf9ccOQEWL9B-MKuVmYGawLBpDRpTX\"\n    ],\n    \"topic\": \"vfind\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/user/unsubscribe",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"user",
+						"unsubscribe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Notifications",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"topic\": \"vfind\",\n    \"message\": \"I am comming\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/user/send",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"user",
+						"send"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Firebase Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"asma12@gmail.com\",\n    \"password\": \"asma12\",\n    \"returnSecureToken\": true\n}"
+				},
+				"url": {
+					"raw": "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAB9RCHN5NfJxDsRnGGxfN9AslMOYNHo3U",
+					"protocol": "https",
+					"host": [
+						"identitytoolkit",
+						"googleapis",
+						"com"
+					],
+					"path": [
+						"v1",
+						"accounts:signInWithPassword"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "AIzaSyAB9RCHN5NfJxDsRnGGxfN9AslMOYNHo3U"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
