@@ -2,13 +2,12 @@ package db
 
 import (
 	"github.com/fatih/color"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var client *mongo.Client
+// var client *mongo.Client
 
 // Dbconnect -> connects mongo
-func Dbconnect() *mongo.Client {
+func Dbconnect() error {
 	// clientOptions := options.Client().ApplyURI(middlewares.DotEnvVariable("MONGO_URL"))
 	// client, err := mongo.Connect(context.TODO(), clientOptions)
 	// if err != nil {
@@ -22,5 +21,5 @@ func Dbconnect() *mongo.Client {
 	// 	log.Fatal(err)
 	// }
 	color.Green("⛁ Connected to Database")
-	return client
+	return nil
 }

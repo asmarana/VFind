@@ -1,91 +1,78 @@
 package controllers
 
-import (
-	"encoding/json"
-	"net/http"
-	"strings"
+// var mongoClient = db.Dbconnect()
 
-	"vfind/db"
-	middlewares "vfind/handlers"
-	"vfind/models"
+// var RegisterUser = http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+// 	var user models.User
+// 	err := json.NewDecoder(r.Body).Decode(&user)
+// 	if err != nil {
+// 		middlewares.ServerErrResponse(err.Error(), rw)
+// 		return
+// 	}
+// collection := mongoClient.Database("vfind").Collection("users")
+// var existingUser models.User
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-)
+// err = collection.FindOne(r.Context(), bson.D{primitive.E{Key: "email", Value: user.Email}}).Decode(&existingUser)
+// if err == nil {
+// 	middlewares.ErrorResponse("email is already exists", rw)
+// 	return
+// }
+// err = collection.FindOne(r.Context(), bson.D{primitive.E{Key: "dash", Value: user.Dash}}).Decode(&existingUser)
+// if err == nil {
+// 	middlewares.ErrorResponse("dash is already exists", rw)
+// 	return
+// }
+// err = collection.FindOne(r.Context(), bson.D{primitive.E{Key: "mnemonic", Value: user.Mnemonic}}).Decode(&existingUser)
+// if err == nil {
+// 	middlewares.ErrorResponse("Mnemonic Invalid", rw)
+// 	return
+// }
+// passwordHash, err := middlewares.HashPassword(user.Password)
+// if err != nil {
+// 	middlewares.ServerErrResponse(err.Error(), rw)
+// 	return
+// }
+// user.Password = passwordHash
+// user.OTPEnabled = false
+// result, err := collection.InsertOne(r.Context(), user)
+// if err != nil {
+// 	middlewares.ServerErrResponse(err.Error(), rw)
+// 	return
+// }
+// res, _ := json.Marshal(result.InsertedID)
+// middlewares.SuccessResponse(`inserted at `+strings.Replace(string(res), `"`, ``, 2), rw)
+// })
 
-var mongoClient = db.Dbconnect()
-
-var RegisterUser = http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
-	var user models.User
-	err := json.NewDecoder(r.Body).Decode(&user)
-	if err != nil {
-		middlewares.ServerErrResponse(err.Error(), rw)
-		return
-	}
-	collection := mongoClient.Database("vfind").Collection("users")
-	var existingUser models.User
-
-	err = collection.FindOne(r.Context(), bson.D{primitive.E{Key: "email", Value: user.Email}}).Decode(&existingUser)
-	if err == nil {
-		middlewares.ErrorResponse("email is already exists", rw)
-		return
-	}
-	// err = collection.FindOne(r.Context(), bson.D{primitive.E{Key: "dash", Value: user.Dash}}).Decode(&existingUser)
-	// if err == nil {
-	// 	middlewares.ErrorResponse("dash is already exists", rw)
-	// 	return
-	// }
-	// err = collection.FindOne(r.Context(), bson.D{primitive.E{Key: "mnemonic", Value: user.Mnemonic}}).Decode(&existingUser)
-	// if err == nil {
-	// 	middlewares.ErrorResponse("Mnemonic Invalid", rw)
-	// 	return
-	// }
-	// passwordHash, err := middlewares.HashPassword(user.Password)
-	// if err != nil {
-	// 	middlewares.ServerErrResponse(err.Error(), rw)
-	// 	return
-	// }
-	// user.Password = passwordHash
-	// user.OTPEnabled = false
-	result, err := collection.InsertOne(r.Context(), user)
-	if err != nil {
-		middlewares.ServerErrResponse(err.Error(), rw)
-		return
-	}
-	res, _ := json.Marshal(result.InsertedID)
-	middlewares.SuccessResponse(`inserted at `+strings.Replace(string(res), `"`, ``, 2), rw)
-})
-
-var LoginUser = http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
-	var user models.User
-	err := json.NewDecoder(r.Body).Decode(&user)
-	if err != nil {
-		middlewares.ServerErrResponse(err.Error(), rw)
-		return
-	}
-	collection := mongoClient.Database("vfind").Collection("users")
-	var existingUser models.User
-	// if len(user.Username) > 0 {
-	// err = collection.FindOne(r.Context(), bson.D{primitive.E{Key: "username", Value: user.Username}}).Decode(&existingUser)
-	// } else {
-	err = collection.FindOne(r.Context(), bson.D{primitive.E{Key: "email", Value: user.Email}}).Decode(&existingUser)
-	// }
-	if err != nil {
-		middlewares.ErrorResponse("user doesn't exist", rw)
-		return
-	}
-	// isPasswordMatch := middlewares.CheckPasswordHash(user.Password, existingUser.Password)
-	// if !isPasswordMatch {
-	// 	middlewares.ErrorResponse("password doesn't match", rw)
-	// 	return
-	// }
-	token, err := middlewares.GenerateJWT(existingUser)
-	if err != nil {
-		middlewares.ErrorResponse("failed to generate token", rw)
-		return
-	}
-	middlewares.SuccessResponse(string(token), rw)
-})
+// var LoginUser = http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+// 	var user models.User
+// 	err := json.NewDecoder(r.Body).Decode(&user)
+// 	if err != nil {
+// 		middlewares.ServerErrResponse(err.Error(), rw)
+// 		return
+// 	}
+// 	collection := mongoClient.Database("vfind").Collection("users")
+// 	var existingUser models.User
+// 	// if len(user.Username) > 0 {
+// 	// err = collection.FindOne(r.Context(), bson.D{primitive.E{Key: "username", Value: user.Username}}).Decode(&existingUser)
+// 	// } else {
+// 	err = collection.FindOne(r.Context(), bson.D{primitive.E{Key: "email", Value: user.Email}}).Decode(&existingUser)
+// 	// }
+// 	if err != nil {
+// 		middlewares.ErrorResponse("user doesn't exist", rw)
+// 		return
+// 	}
+// 	// isPasswordMatch := middlewares.CheckPasswordHash(user.Password, existingUser.Password)
+// 	// if !isPasswordMatch {
+// 	// 	middlewares.ErrorResponse("password doesn't match", rw)
+// 	// 	return
+// 	// }
+// 	token, err := middlewares.GenerateJWT(existingUser)
+// 	if err != nil {
+// 		middlewares.ErrorResponse("failed to generate token", rw)
+// 		return
+// 	}
+// 	middlewares.SuccessResponse(string(token), rw)
+// })
 
 // // GetUserByID -> Get user details with user id
 // var GetUserByID = http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
