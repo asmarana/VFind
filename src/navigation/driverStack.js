@@ -14,6 +14,8 @@ import MapComponent from '../components/map';
 import DriverProfile from '../screens/navbar/profileScreen/driverProfile';
 import GetStarted from '../screens/startup/getStarted';
 import AboutScreen from '../screens/navbar/aboutScreen';
+import ChatScreen from '../screens/navbar/chatScreen';
+import UserNotifications from '../screens/navbar/notificationScreen/userNotifications';
 
 const Stack =  createNativeStackNavigator();
 
@@ -35,8 +37,10 @@ const DriverStack = () => {
                 <Stack.Screen name="FinderStack" component={FinderStack} options={{header: () => null}} />
                 <Stack.Screen name="Maps" component={MapComponent} options={{header: () => null}} />
                 <Stack.Screen name="DriverProfile" component={DriverProfile} options={{header: () => null}} />
+                <Stack.Screen name="ChatScreen" component={ChatScreen} options={{header: () => null}} />
                 <Stack.Screen name="GetStarted" component={GetStarted} options={{header: () => null}} />
                 <Stack.Screen name="AboutScreen" component={AboutScreen} options={{header: () => null}} />
+                <Stack.Screen name="UserNotifications" component={UserNotifications} options={{header: () => null}} />
             </Stack.Navigator>
         </>
   );

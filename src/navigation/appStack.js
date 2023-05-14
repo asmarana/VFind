@@ -108,13 +108,13 @@ const NotificationStack = ({navigation}) => (
                             size={22}
                             backgroundColor="#fff"
                             color={secondary}
-                            onPress={() => navigation.navigate('Notifications')}
+                            onPress={() => navigation.navigate('GenerateNotifications')}
                         />
                     </View>
                 ),
             }}
         />
-        <Stack.Screen name="Notifications" component={GenerateNotification}/>
+        <Stack.Screen name="GenerateNotifications" component={GenerateNotification}/>
     </Stack.Navigator>
 );
 

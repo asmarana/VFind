@@ -4,10 +4,12 @@ import Button from '../../../components/button/button';
 import BorderInput from '../../../components/input/borderInput';
 import Icon from 'react-native-vector-icons/FontAwesome';
 // import Lottie from 'lottie-react-native';
-import Loader from '../../../components/loader/loader';
+// import Loader from '../../../components/loader/loader';
 import { secondary, primaryLight, whiteplus, secondaryLight } from '../../../constants/colors';
 import { AuthContext } from '../../../navigation/authProvider';
 import Logo from '../../../components/logo';
+import Background from '../../../components/background';
+import CustomLoader from '../../../components/loader/customLoader';
 
 const SignupScreen = ({ navigation }) => {
   const [inputs, setInputs] = React.useState({
@@ -34,17 +36,6 @@ const SignupScreen = ({ navigation }) => {
       handleError('Please input a valid email', 'email');
       isValid = false;
     }
-
-    // if (!inputs.fullname) {
-    //   handleError('Please input fullname', 'fullname');
-    //   isValid = false;
-    // }
-
-    // if (!inputs.phone) {
-    //   handleError('Please input phone number', 'phone');
-    //   isValid = false;
-    // }
-
     if (!inputs.password) {
       handleError('Please input password', 'password');
       isValid = false;
@@ -56,7 +47,7 @@ const SignupScreen = ({ navigation }) => {
     if (isValid) {
       setEmail(inputs.email)
       setPassword(inputs.password)
-      register(inputs.email, inputs.password)
+      register(inputs.email, inputs.password,setLoading)
     }
   };
 
@@ -68,10 +59,11 @@ const SignupScreen = ({ navigation }) => {
     setErrors(prevState => ({ ...prevState, [input]: error }));
   };
   return (
-    <SafeAreaView style={{ backgroundColor: whiteplus, flex: 1 }}>
-      <Loader visible={loading} />
+    <Background>
+    <SafeAreaView style={{flex: 1 }}>
+      {/* <Loader visible={loading} /> */}
       <ScrollView
-        contentContainerStyle={{ paddingTop: 20, paddingHorizontal: 20 }}>
+        contentContainerStyle={{ paddingTop: "1%", paddingHorizontal: 0 }}>
           <View style = {{marginTop:30}}>
           <Logo/>
           </View>
@@ -99,25 +91,6 @@ const SignupScreen = ({ navigation }) => {
             autoCapitalize="none"
             autoCorrect={false}
           />
-
-          {/* <BorderInput
-            onChangeText={text => handleOnchange(text, 'fullname')}
-            onFocus={() => handleError(null, 'fullname')}
-            iconName="account-outline"
-            label="Full Name"
-            placeholder="Enter your full name"s
-            error={errors.fullname}
-          /> */}
-          {/* 
-          <BorderInput
-            keyboardType="numeric"
-            onChangeText={text => handleOnchange(text, 'phone')}
-            onFocus={() => handleError(null, 'phone')}
-            iconName="phone-outline"
-            label="Phone Number"
-            placeholder="Enter your phone no"
-            error={errors.phone}
-          /> */}
           <BorderInput
             onChangeText={text => handleOnchange(text, 'password')}
             // onChangeText={(userPassword) => setPassword(userPassword)}
@@ -129,6 +102,7 @@ const SignupScreen = ({ navigation }) => {
             password
           />
           <Button label="Signup" onPress={validate} />
+          {loading && <CustomLoader/>}
           <View style={styles.lineContainer}>
             <View style={styles.line} />
             <Text style={styles.orLoginWithText}>Or Signup With</Text>
@@ -142,8 +116,8 @@ const SignupScreen = ({ navigation }) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 paddingVertical: 10,
-                paddingHorizontal: 15,
-                borderRadius: 2.9,
+                paddingHorizontal: 12,
+                borderRadius: 3,
                 marginRight: 10,
               }}
             >
@@ -156,8 +130,8 @@ const SignupScreen = ({ navigation }) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 paddingVertical: 10,
-                paddingHorizontal: 15,
-                borderRadius: 2.9,
+                paddingHorizontal: 12,
+                borderRadius: 3,
               }}
             >
               <Icon name="phone" color="#fff" size={20} style={{ marginRight: 10 }} />
@@ -178,6 +152,7 @@ const SignupScreen = ({ navigation }) => {
         </View>
       </ScrollView>
     </SafeAreaView>
+    </Background>
   );
 };
 

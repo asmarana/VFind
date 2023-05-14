@@ -39,7 +39,7 @@ const DriverProfile = () => {
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
-        <View style={styles.orangeSection} />
+        <ImageBackground source={require('../../../assets/menu.png')} style={styles.orangeSection}/>
         <View style={styles.LightSection} />
         <View style={styles.centerContainer}>
           <View style={styles.whiteContainer}>

@@ -177,7 +177,7 @@ import Menu from '../../../components/menu/menu';
 
 const TABS = [
   { id: 1, title: 'Schools', icon: 'book-open', data: ['City Model School', 'Roots SChool', 'Jinnah School'] },
-  { id: 2, title: 'Van', icon: 'truck', data: ['13 Seats', '10 Booked', '3 Left'] },
+  { id: 2, title: 'Schedule', icon: 'clock', data: ['Morning Shift : 6:30', 'Afternoon Shift : 12:24'] },
   { id: 3, title: 'Routes', icon: 'map-pin', data: ['Opal road', 'Busti Road', 'Cantt Raod'] },
 ];
 
@@ -218,8 +218,8 @@ const ProfileScreen= () => {
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
-        <View style={styles.orangeSection} />
-      <Menu/>
+      <ImageBackground source={require('../../../assets/menu.png')} style={styles.orangeSection}/>
+        <Menu/>
         <View style={styles.LightSection} />
         <View style={styles.centerContainer}>
           <View style={styles.whiteContainer}>
@@ -271,6 +271,7 @@ const styles = StyleSheet.create({
   orangeSection: {
     flex: 3,
     backgroundColor: primary,
+    padding: 20, 
   },
   LightSection: {
     flex: 2,
