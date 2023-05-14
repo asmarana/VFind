@@ -14,7 +14,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
-import { grey, whiteplus, white, primary, secondary, secondaryLight } from '../../../constants/colors';
+import { whiteplus, primary, secondary, secondaryLight } from '../../../constants/colors';
 
 const Search = ({ searchResult, index }) => {
   const [searchSchool, setSearchSchool] = useState('');
@@ -99,7 +99,8 @@ const Search = ({ searchResult, index }) => {
                     </View>
                   </TouchableOpacity>
                   <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.messageButton}>
+                    <TouchableOpacity style={styles.messageButton}
+                    onPress={() => navigation.navigate('ChatScreen')}>
                       <Text style={styles.buttonText}>Message</Text>
                     </TouchableOpacity>
                     <TouchableOpacity

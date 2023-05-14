@@ -5,6 +5,7 @@ import Lottie from 'lottie-react-native';
 import Button from '../../../components/button/button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Logo from '../../../components/logo';
+import Background from '../../../components/background';
 
 
 const UserTypeScreen = ({ navigation }) => {
@@ -20,9 +21,10 @@ const UserTypeScreen = ({ navigation }) => {
         }
     };
     return (
+        <Background>
         <View style={styles.container}>
-            <SafeAreaView style={{ backgroundColor: whiteplus, flex: 1 }}>
-                <View style={{ paddingTop: 50, paddingHorizontal: 20, alignItems: 'center', }}>
+            <SafeAreaView style={{flex: 1 }}>
+                <View style={{ paddingTop: 40, paddingHorizontal: 20, alignItems: 'center', }}>
                     <Text style={{ color: primaryLight, fontSize: 25, fontWeight: 'bold', }}>
                         You are a ?
                     </Text>
@@ -42,6 +44,7 @@ const UserTypeScreen = ({ navigation }) => {
                 </View>
             </SafeAreaView >
         </View >
+        </Background>
     );
 };
 
@@ -50,7 +53,6 @@ export default UserTypeScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: whiteplus,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -61,6 +63,13 @@ const styles = StyleSheet.create({
         margin: 10,
         padding: 10,
         borderRadius: 3,
-        elevation: 0.9,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 3.84,
     }
 })

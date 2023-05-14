@@ -4,11 +4,13 @@ import { useNavigation } from '@react-navigation/native';
 import { View, Text, SafeAreaView, Keyboard, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { primaryLight, secondary, secondaryLight, whiteplus } from '../../../constants/colors';
-import Loader from '../../../components/loader/loader';
+// import Loader from '../../../components/loader/loader';
 import Button from '../../../components/button/button';
 import BorderInput from '../../../components/input/borderInput';
 import { AuthContext } from '../../../navigation/authProvider';
 import Logo from '../../../components/logo';
+import Background from '../../../components/background';
+import CustomLoader from '../../../components/loader/customLoader';
 
 const LoginScreen = ({ }) => {
   const navigation = useNavigation();
@@ -39,7 +41,7 @@ const LoginScreen = ({ }) => {
       isValid = false;
     }
     if (isValid) {
-      login(inputs.email, inputs.password);
+      login(inputs.email, inputs.password , setLoading);
     }
   };
 
@@ -52,19 +54,20 @@ const LoginScreen = ({ }) => {
     setErrors(prevState => ({ ...prevState, [input]: error }));
   };
   return (
-    <SafeAreaView style={{ backgroundColor: whiteplus, flex: 1 }}>
-      <Loader visible={loading} />
-      <View style={{ marginTop: '15%' }}>
+    <Background>
+    <SafeAreaView style={{flex: 1 }}>
+      {/* <Loader visible={loading} /> */}
+      <View style={{ marginTop: '10%' }}>
         <Logo />
       </View>
-      <View style={{ paddingHorizontal: 20 }}>
+      <View style={{ paddingHorizontal: "1%" }}>
         <Text style={{ color: secondary, fontSize: 40, fontWeight: 'bold' }}>
           Log In
         </Text>
         <Text style={{ color: primaryLight, fontSize: 18, marginVertical: 10 }}>
           Enter Your Details to Login
         </Text>
-        <View style={{ marginVertical: 20 }}>
+        <View style={{ marginVertical:"3%" }}>
           <BorderInput
             onChangeText={text => handleOnchange(text, 'email')}
             onFocus={() => handleError(null, 'email')}
@@ -89,6 +92,7 @@ const LoginScreen = ({ }) => {
             password
           />
           <Button label=" Log in" onPress={validate} />
+          {loading && <CustomLoader />}
           <View style={styles.lineContainer}>
             <View style={styles.line} />
             <Text style={styles.orLoginWithText}>Or Login With</Text>
@@ -138,6 +142,7 @@ const LoginScreen = ({ }) => {
         </View>
       </View>
     </SafeAreaView>
+    </Background>
   );
 };
 

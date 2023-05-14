@@ -10,11 +10,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import SettingScreen from '../screens/navbar/settingScreen';
 import AboutScreen from '../screens/navbar/aboutScreen';
+import { useNavigation } from '@react-navigation/native';
 import FeedbackScreen from '../screens/navbar/feedbackScreen';
 
 const Drawer = createDrawerNavigator();
 
 const LogoHeader = () => (
+
     <View>
         <Image
             source={require('../assets/logo/greenLogo.png')}
@@ -23,8 +25,7 @@ const LogoHeader = () => (
     </View>
 );
 
-
-const SearchStack = () => (
+const SearchStack = ({ navigation }) => (
     <Drawer.Navigator
         drawerContent={props => <CustomDrawer {...props} />}
         screenOptions={{
@@ -45,7 +46,10 @@ const SearchStack = () => (
                 drawerIcon: ({ color }) => (
                     <Ionicons name="home-outline" size={22} color={color} />
                 ),
-                headerRight: () => <LogoHeader />,
+                headerRight: () => <View
+                    style={{ marginRight: 12 }}>
+                    <Ionicons name="notifications" size={22} color={'black'} onPress={() => navigation.navigate('UserNotifications')}/>
+                </View>,
                 title: 'Home',
                 headerShown: true,
                 headerTitleStyle: {
@@ -53,6 +57,7 @@ const SearchStack = () => (
                     fontWeight: "bold",
                     color: "white",
                 },
+                // headerTransparent: true,
                 // headerLeft: () => <Feather name="menu" color={primary} size={24} />
             }}
         />
@@ -99,10 +104,9 @@ const SearchStack = () => (
 );
 
 const FinderStack = () => {
-
-
+    const navigation = useNavigation();
     return (
-        <SearchStack />
+        <SearchStack  navigation={navigation}/>
     );
 };
 

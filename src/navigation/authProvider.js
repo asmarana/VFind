@@ -3,10 +3,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleUserTypeSelect = async (userType) => {
         await AsyncStorage.setItem('userType', userType);
@@ -19,8 +21,9 @@ export const AuthProvider = ({ children }) => {
             value={{
                 user,
                 setUser,
-                login: async (email, password) => {
+                login: async (email, password,setLoading) => {
                     try {
+                        setLoading(true);
                         await auth().signInWithEmailAndPassword(email, password);
                         // then((response) => {
                         //     const token = response.user._user.uid; // access the user ID token
@@ -35,6 +38,9 @@ export const AuthProvider = ({ children }) => {
                     } catch (e) {
                         console.log(e);
                     }
+                    finally {
+                        setLoading(false);
+                      }
                 },
                 googleLogin: async () => {
                     try {
@@ -73,8 +79,9 @@ export const AuthProvider = ({ children }) => {
                         console.log({ error });
                     }
                 },
-                register: async (email, password) => {
+                register: async (email, password,setLoading) => {
                     try {
+                        setLoading(true);
                         const userCredential = await auth().createUserWithEmailAndPassword(email, password);
                         const user = userCredential.user;
                         const idToken = await user.getIdToken(); // get the user ID token
@@ -83,6 +90,9 @@ export const AuthProvider = ({ children }) => {
                     } catch (e) {
                         console.log(e); // log any errors that occur during registration
                     }
+                    finally {
+                        setLoading(false);
+                      }
                 },
                 // register: async (email, password) => {
                 //     try {
@@ -102,6 +112,7 @@ export const AuthProvider = ({ children }) => {
                     } catch (e) {
                         console.log(e);
                     }
+
                 },
             }}
         >
