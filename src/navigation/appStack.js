@@ -43,17 +43,17 @@ const MapStack = ({ navigation }) => (
                     shadowColor: '#fff',
                     elevation: 0,
                 },
-                headerRight: () => (
-                    <View>
-                        <FontAwesome5.Button
-                            name="bars"
-                            size={22}
-                            backgroundColor="#fff"
-                            color={primary}
-                            onPress={() => navigation.navigate('DriverLocation')}
-                        />
-                    </View>
-                ),
+                // headerRight: () => (
+                //     <View>
+                //         <FontAwesome5.Button
+                //             name="bars"
+                //             size={22}
+                //             backgroundColor="#fff"
+                //             color={primary}
+                //             onPress={() => navigation.navigate('DriverLocation')}
+                //         />
+                //     </View>
+                // ),
             }}
         />
         <Stack.Screen
@@ -81,7 +81,7 @@ const MapStack = ({ navigation }) => (
 const MessageStack = ({ navigation }) => (
     
     <Stack.Navigator>
-        <Stack.Screen name="Messages" component={MessagesScreen}/>
+        <Stack.Screen name="MessagesScreen" component={MessagesScreen}/>
         <Stack.Screen
             name="Chat"
             component={ChatScreen}
@@ -97,7 +97,7 @@ const MessageStack = ({ navigation }) => (
 const NotificationStack = ({navigation}) => (
     <Stack.Navigator>
         <Stack.Screen
-            name="Notification"
+            name="Notifications"
             component={NotificationScreen}
             options={{
                 // headerShown: false,
@@ -108,13 +108,13 @@ const NotificationStack = ({navigation}) => (
                             size={22}
                             backgroundColor="#fff"
                             color={secondary}
-                            onPress={() => navigation.navigate('GenerateNotifications')}
+                            onPress={() => navigation.navigate('Notice Board')}
                         />
                     </View>
                 ),
             }}
         />
-        <Stack.Screen name="GenerateNotifications" component={GenerateNotification}/>
+        <Stack.Screen name="Notice Board" component={GenerateNotification}/>
     </Stack.Navigator>
 );
 

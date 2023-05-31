@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, {  useContext,useState,useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity,Button,StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { grey, primaryLight, secondaryLight } from '../../../constants/colors';
@@ -7,23 +7,45 @@ import Background from '../../../components/background';
 import { Alert } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import NotificationController from './notificationController.android';
+import { MessageContext } from '../../../components/notification/messageContext';
+import { SendMessage } from '../../../../api';
 
 const GenerateNotification = () => {
+  // const {setMessage} = useContext(MessageContext);
 
   const [notificationText, setNotificationText] = useState('');
 
-  useEffect(() => {
-    messaging().setBackgroundMessageHandler(async remoteMessage => {
-      console.log('Message handled in the background!', remoteMessage);
-    })
+  // useEffect(() => {
+  //   messaging().setBackgroundMessageHandler(async remoteMessage => {
+  //     console.log('Message handled in the background!', remoteMessage);
+  //   })
 
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-        Alert.alert('A new FCM message arrived!',JSON.stringify(remoteMessage));
-        console.log(remoteMessage)
+  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
+  //      setMessage(remoteMessage);
+  //       // Alert.alert('A new FCM message arrived!',JSON.stringify(remoteMessage));
+  //       console.log(remoteMessage)
+  //   });
+
+  //   return unsubscribe;
+  // }, []);
+
+
+  const setMessage  = useContext(MessageContext);
+
+  useEffect(() => {
+    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+      console.log('Message handled in the background!', remoteMessage);
     });
 
-    return unsubscribe;
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      setMessage(remoteMessage);
+      Alert.alert('New Notification!', JSON.stringify(remoteMessage));
+      console.log(remoteMessage);
+    });
+
+    return () => unsubscribe();
   }, []);
+
 
   const checkToken = async() => {
     const fcmToken = await messaging().getToken();
@@ -32,6 +54,36 @@ const GenerateNotification = () => {
       Alert.alert(fcmToken);
     }
   }
+
+  const Send = async () => {
+    const fcmToken = await messaging().getToken();
+    if (fcmToken){
+      console.log(fcmToken);
+      // Alert.alert(fcmToken);
+    }
+     try{
+      const resp = await SendMessage("vfind",notificationText)
+      console.log(resp)
+      Alert.alert('Notification sent successfully!');
+     } catch(err){
+          console.log(err)
+      Alert.alert('Error Sending notification!');
+
+     }
+     
+  }
+
+  // const Send = async () => {
+  //   try {
+  //     console.log("here 1")
+  //     const resp = await SendMessage("vfind", "hello");
+  //     console.log(resp);
+  //     Alert.alert('Notification sent successfully!');
+  //   } catch (err) {
+  //     console.log(err);
+  //     Alert.alert('Error Sending notification!');
+  //   }
+  // };
 
   return (
     <Background>
@@ -53,7 +105,7 @@ const GenerateNotification = () => {
        <NotificationController/>
       <GradientButton 
       style={{padding: 10, borderRadius: 5, marginTop: 20 }}
-      onPress={() => checkToken()}
+      onPress={() => Send()}
       title={"Send"}/>
       </View>
     </View>

@@ -1,8 +1,7 @@
 
 import React, { useState } from 'react';
-import { View, Image, Text, TouchableOpacity, FlatList, StyleSheet, ImageBackground } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { grey, primary, primaryLight, secondary, secondaryLight, white, whiteplus } from '../../../constants/colors';
+import { View, Image, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
+import {primary, primaryLight, secondary, secondaryLight, white, whiteplus } from '../../../constants/colors';
 import GradientButton from '../../../components/button/gradientButton';
 import GradientIconButton from '../../../components/button/gradientIconButton';
 import FeatherIcon from 'react-native-vector-icons/Feather';

@@ -36,13 +36,33 @@ const DriverForm = () => {
     if (!inputs.phone) {
       handleError('Please input phone number', 'phone');
       isValid = false;
+    }else if (inputs.phone.length !== 11) {
+      handleError('Invalid Phone Number', 'phone');
+      isValid = false;
+    }else if (/[^0-9-]/.test(inputs.phone)) {
+      handleError('Invalid Phone number. Special characters are not allowed', 'phone');
+      isValid = false;
+    }else if (!inputs.phone.startsWith('03')) {
+      handleError('Invalid Phone number. First two digits should be "03"', 'phone');
+      isValid = false;
     }
+
     if (!inputs.school) {
       handleError('Please input school', 'school');
       isValid = false;
     }
     if (!inputs.cnic) {
       handleError('Please input CNIC number', 'cnic');
+      isValid = false;
+    }else if (/[a-zA-Z]/.test(inputs.cnic)) {
+      handleError('Invalid CNIC number. Alphabets are not allowed', 'cnic');
+      isValid = false;
+    }  
+     else if (inputs.cnic.length !== 13) {
+      handleError('Invalid CNIC number. CNIC should be 13 characters long', 'cnic');
+      isValid = false;
+    } else if (/[^0-9-]/.test(inputs.cnic)) {
+      handleError('Invalid CNIC number. Special characters are not allowed', 'cnic');
       isValid = false;
     }
 
@@ -55,7 +75,6 @@ const DriverForm = () => {
 
     }
   };
-
 
   const handleOnchange = (text, input) => {
     setInputs(prevState => ({ ...prevState, [input]: text }));
@@ -133,7 +152,7 @@ const DriverForm = () => {
             onFocus={() => handleError(null, 'cnic')}
             iconName="id-card"
             label="CNIC"
-            placeholder="Enter your CNIC"
+            placeholder="e.g. 3640712345671"
             error={errors.cnic}
           />
           <Button label="Submit" onPress={validate} />

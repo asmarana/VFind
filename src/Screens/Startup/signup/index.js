@@ -124,7 +124,7 @@ const SignupScreen = ({ navigation }) => {
               <Icon name="google" color="#fff" size={20} style={{ marginRight: 10 }} />
               <Text style={{ color: '#fff', fontWeight: 'bold' }}>Signup with Google</Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
                 backgroundColor: '#82ca9d',
                 flexDirection: 'row',
@@ -136,7 +136,7 @@ const SignupScreen = ({ navigation }) => {
             >
               <Icon name="phone" color="#fff" size={20} style={{ marginRight: 10 }} />
               <Text style={{ color: '#fff', fontWeight: 'bold' }}>Signup with Phone</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           <Text
             onPress={() => navigation.navigate('LoginScreen')}

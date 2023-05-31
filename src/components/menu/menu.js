@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TouchableOpacity, View, StyleSheet } from 'react-native';
 import  MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { AuthContext } from '../../navigation/authProvider';
 
 const Menu = () => {
+  const {logout } = useContext(AuthContext);
+
   const [showMenu, setShowMenu] = useState(false);
 
   const handleMenuPress = () => {
@@ -28,7 +31,7 @@ const Menu = () => {
       </TouchableOpacity>
       {showMenu && (
         <View style={styles.menu}>
-          <TouchableOpacity onPress={handleOption1Press}>
+          {/* <TouchableOpacity onPress={handleOption1Press}>
             <View style={styles.menuItem}>
               <MaterialIcons name="settings" size={24} color="black" />
             </View>
@@ -37,8 +40,8 @@ const Menu = () => {
             <View style={styles.menuItem}>
               <MaterialIcons name="help" size={24} color="black" />
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleOption3Press}>
+          </TouchableOpacity> */}
+          <TouchableOpacity onPress={() => logout()}>
             <View style={styles.menuItem}>
               <MaterialIcons name="logout" size={24} color="black" />
             </View>

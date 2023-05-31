@@ -18,10 +18,10 @@ const AuthStack = () => {
                 initialRouteName={SplashScreen}
                 screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="SplashScreen" component={SplashScreen} options={{header: () => null}}/>
-                <Stack.Screen name="GetStartedScreen" component={GetStarted} options={{header: () => null}}/>
                 <Stack.Screen name="SignupScreen" component={SignupScreen} options={{header: () => null}}/>
                 <Stack.Screen name="LoginScreen" component={LoginScreen} options={{header: () => null}} />
-                <Stack.Screen name="UserTypeScreen" component={UserTypeScreen} options={{header: () => null}} />
+                <Stack.Screen name="GetStartedScreen" component={GetStarted} options={{header: () => null}}/>
+                {/* <Stack.Screen name="UserTypeScreen" component={UserTypeScreen} options={{header: () => null}} /> */}
             </Stack.Navigator>
         </>
   );

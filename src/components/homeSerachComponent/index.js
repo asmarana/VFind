@@ -17,21 +17,16 @@ const HomeSearch = () => {
 
         <View style={styles.timeContainer}>
           <AntDesign name={'search1'} size={16} color={'#535353'} />
-          {/* <Text style={{ color: '#535353' }}>Now</Text> */}
-          {/* <MaterialIcons name={'keyboard-arrow-down'} size={16} color={'#535353'} /> */}
         </View>
       </Pressable>
-      {/* <Pressable onPress={() => navigation.navigate("Search")} style={styles.buttonContainer}>
-        <Feather name="search" size={24} color={secondaryLight} style={styles.buttonIcon} />
-        <Text style={styles.buttonText}>Search</Text>
-      </Pressable> */}
 
       {/* School destination */}
       <View style={styles.row}>
         <View style={styles.iconContainer}>
           <AntDesign name={'clockcircle'} size={20} color={'#ffffff'} />
         </View>
-        <Text  onPress={() => navigation.navigate("Maps")} style={styles.destinationText}>School</Text>
+        <Text  onPress={() => navigation.navigate("FinderLocationSearch")} style={styles.destinationText}>School</Text>
+        
       </View>
 
       {/* Home destination */}
@@ -39,7 +34,7 @@ const HomeSearch = () => {
         <View style={[styles.iconContainer, { backgroundColor: '#218cff' }]}>
           <Entypo name={'home'} size={20} color={'#ffffff'} />
         </View>
-        <Text style={styles.destinationText}>Home</Text>
+        <Text onPress={() => navigation.navigate("FinderLocationSearch")}  style={styles.destinationText}>Home</Text>
       </View>
     </View>
   )
