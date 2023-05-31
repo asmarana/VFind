@@ -55,12 +55,19 @@ const VehicleForm = () => {
         if (!inputs.totalSeats) {
             handleError('Please input Total Seats', 'totalSeats');
             isValid = false;
-        }
+        } else if (inputs.totalSeats.length >= 20) {
+            handleError('Total Seats will not be more than 20', 'password');
+            isValid = false;
+          }
 
         if (!inputs.availableSeats) {
             handleError('Please input  Available Seats', 'availableSeats');
             isValid = false;
         }
+        else if (inputs.availableSeats.length >= 20) {
+            handleError('Vehicles seats will not be more than 20', 'availableSeats');
+            isValid = false;
+          }
 
         if (isValid) {
             setVehicleName(inputs.vehicleName)
@@ -137,7 +144,7 @@ const VehicleForm = () => {
                         error={errors.vehicleName}
                     />
                     <BorderInput
-                        keyboardType="numeric"
+                        // keyboardType="numeric"
                         onChangeText={text => handleOnchange(text, 'vehicleId')}
                         onFocus={() => handleError(null, 'vehicleId')}
                         iconName="tablet"

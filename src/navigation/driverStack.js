@@ -16,6 +16,8 @@ import GetStarted from '../screens/startup/getStarted';
 import AboutScreen from '../screens/navbar/aboutScreen';
 import ChatScreen from '../screens/navbar/chatScreen';
 import UserNotifications from '../screens/navbar/notificationScreen/userNotifications';
+import FinderLocationSearch from '../screens/navbar/searchScreen/finderLocationSearch';
+import CnicForm from '../screens/startup/driverRegistration/cnicForm';
 
 const Stack =  createNativeStackNavigator();
 
@@ -41,28 +43,11 @@ const DriverStack = () => {
                 <Stack.Screen name="GetStarted" component={GetStarted} options={{header: () => null}} />
                 <Stack.Screen name="AboutScreen" component={AboutScreen} options={{header: () => null}} />
                 <Stack.Screen name="UserNotifications" component={UserNotifications} options={{header: () => null}} />
+                <Stack.Screen name="FinderLocationSearch" component={FinderLocationSearch} options={{header: () => null}} />
+                <Stack.Screen name="CnicForm" component={CnicForm} options={{header: () => null}} />
             </Stack.Navigator>
         </>
   );
 };
 
 export default DriverStack;
-
-// useEffect(() => {
-//     AsyncStorage.getItem('alreadyLaunched').then((value) => {
-//         if (value == null) {
-//             AsyncStorage.setItem('alreadyLaunched', 'true'); /
-//             setIsFirstLaunch(true);
-//         } else {
-//             setIsFirstLaunch(false);
-//         }
-//     });
-// }, []);
-
-// if (isFirstLaunch == null) {
-//     return null;
-// } else if (isFirstLaunch == true) {
-//     return()
-// } else {
-//     return()
-// }

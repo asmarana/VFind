@@ -1,179 +1,18 @@
-// import React, { useState, useContext, useEffect} from 'react';
-// import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
-// import { AuthContext } from '../../../navigation/authProvider';
-// import auth from '@react-native-firebase/auth';
-
-// const ProfileScreen = () => {
- 
-//   const [selectedMenu, setSelectedMenu] = useState('route');
-//   const handleMenuPress = (menu: React.SetStateAction<string>) => {
-//     setSelectedMenu(menu);
-//   }
-//   const [showMenu, setShowMenu] = useState(false);
-//   const toggleMenu = () => {
-//     setShowMenu(!showMenu);
-//   };
-//   const [userEmail, setUserEmail] = useState(null);
-
-
-
-
-//   return (
-//     <ScrollView style={styles.container}>
-//       <View style={styles.userInfo}>
-//         <TouchableOpacity onPress={toggleMenu}>
-//           <Text style={styles.username}>Username</Text>
-//         </TouchableOpacity>
-//         {showMenu && (
-//           <View style={styles.menu}>
-//             <TouchableOpacity style={styles.menuItem}>
-//               <Text>Edit Profile</Text>
-//             </TouchableOpacity>
-//             <TouchableOpacity style={styles.menuItem}>
-//               <Text>Settings</Text>
-//             </TouchableOpacity>
-//             <TouchableOpacity onPress={() => logout()} style={styles.menuItem}>
-//               <Text>Logout</Text>
-//             </TouchableOpacity>
-//           </View>
-//         )}
-
-//         <Image source={{ uri: 'https://www.shareicon.net/data/128x128/2016/08/05/806962_user_512x512.png' }}
-//           style={styles.profileImage} />
-
-//         <Text style={styles.bio}>
-//           currently your status is driving.you are on route#1
-//         </Text>
-//         <Text style={styles.email}>Welcome, {userEmail}!</Text>
-//       </View>
-    
-
-//       <View style={styles.vehicleinfo}>
-//         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-//           <TouchableOpacity onPress={() => handleMenuPress('route')}>
-//             <Text style={{ fontSize: 20, fontWeight: 'bold', margin: 10, paddingLeft: 40, backgroundColor: 'orange', padding: 10, color: selectedMenu === 'route' ? 'red' : 'black' }}>Route</Text>
-//           </TouchableOpacity>
-//           <TouchableOpacity onPress={() => handleMenuPress('vehicle')}>
-//             <Text style={{ fontSize: 20, fontWeight: 'bold', margin: 10, backgroundColor: 'orange', padding: 10, color: selectedMenu === 'vehicle' ? 'red' : 'black' }}>Vehicle </Text>
-//           </TouchableOpacity>
-//           <TouchableOpacity onPress={() => handleMenuPress('schools')}>
-//             <Text style={{ fontSize: 20, fontWeight: 'bold', margin: 10, backgroundColor: 'orange', padding: 10, color: selectedMenu === 'schools' ? 'red' : 'black' }}>Schools</Text>
-//           </TouchableOpacity>
-//         </View>
-//         {selectedMenu === 'route' &&
-
-//           <View style={{ margin: 10, paddingLeft: 30, backgroundColor: 'white' }}>
-//             <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'black' }}>Routes' Detail:   </Text>
-//             <Text style={{ fontSize: 15, paddingTop: 9, color: 'black' }}>Route 1: wah cantt</Text>
-//             <Text style={{ fontSize: 15, paddingTop: 7, color: 'black' }}>Route 2: Basti</Text>
-//             <Text style={{ fontSize: 15, paddingTop: 7, color: 'black' }}>Route 3: Taxila</Text>
-//           </View>
-
-//         }
-//         {selectedMenu === 'vehicle' && <View style={{ margin: 10, paddingLeft: 30, backgroundColor: 'white' }}>
-//           <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'black' }}>Vehicle detail:   </Text>
-//           <Text style={{ fontSize: 15, paddingTop: 9, color: 'black' }}>vehicle id :    059</Text>
-//           <Text style={{ fontSize: 15, paddingTop: 7, color: 'black' }}>Vehicle number :    HR-694</Text>
-//           <Text style={{ fontSize: 15, paddingTop: 7, color: 'black' }}>driving license# :    6594932</Text>
-//         </View>
-//         }
-
-//         {selectedMenu === 'schools' &&
-//           <View style={{ margin: 10, paddingLeft: 30, backgroundColor: 'white' }}>
-//             <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'black' }}> Schools' Detail:   </Text>
-//             <Text style={{ fontSize: 15, paddingTop: 2, color: 'black' }}> 1.WISE school and college</Text>
-//             <Text style={{ fontSize: 15, paddingTop: 2, color: 'black' }}>2. POF model high school</Text>
-//             <Text style={{ fontSize: 15, paddingTop: 2, color: 'black' }}>3. Roots international school, Gandhara campus</Text>
-//           </View>
-
-//         }
-//       </View>
-//     </ScrollView>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     color: "black",
-//     backgroundColor: 'white',
-
-//   },
-//   profileImage: {
-//     backgroundColor: 'white',
-//     marginTop: 150,
-//     width: 150,
-//     height: 150,
-//     borderRadius: 100,
-//   },
-//   userInfo: {
-//     backgroundColor: 'black',
-//     borderBottomEndRadius: 20,
-//     borderBottomStartRadius: 20,
-//     color: "black",
-//     marginTop: 20,
-//     alignItems: 'center',
-//   },
-//   vehicleinfo: {
-//     margin: 10,
-//     backgroundColor: 'pink',
-//     paddingTop: 10,
-//     marginBottom: 1000,
-
-//   },
-//   username: {
-//     color: "white",
-//     marginTop: 12,
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//   },
-//   menu: {
-
-//     position: 'absolute',
-//     top: 40,
-//     right: 0,
-//     backgroundColor: 'orange',
-//     borderRadius: 5,
-//     padding: 10,
-//   },
-//   menuItem: {
-
-//     padding: 10,
-//   },
-//   bio: {
-//     color: "white",
-//     marginVertical: 10,
-//     textAlign: 'center',
-//     fontStyle: 'italic'
-//   },
-//   VehicleDetail:
-//   {
-//     color: "black",
-//     marginTop: 40,
-
-//   },
-//   email: {
-//     fontSize: 16,
-//     color: 'lightblue',
-//     paddingBottom: 20
-//   },
-// });
-
-// export default ProfileScreen;
-
-
-
-import React, { useState,useContext,useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Image, Text, TouchableOpacity, FlatList, StyleSheet, ImageBackground } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { grey, primary, primaryLight, secondary, secondaryLight, white, whiteplus } from '../../../constants/colors';
+import { primary, primaryLight, secondary, secondaryLight, white, whiteplus } from '../../../constants/colors';
 import GradientButton from '../../../components/button/gradientButton';
 import GradientIconButton from '../../../components/button/gradientIconButton';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import StarRating from '../../../components/starRating/starRating';
 import MapComponent from '../../../components/map';
 import { AuthContext } from '../../../navigation/authProvider';
 import auth from '@react-native-firebase/auth';
 import Menu from '../../../components/menu/menu';
+import messaging from '@react-native-firebase/messaging';
+import ModalStudentList from '../../../components/list/studentList';
+import firestore from '@react-native-firebase/firestore'
+let token = '';
+
 
 const TABS = [
   { id: 1, title: 'Schools', icon: 'book-open', data: ['City Model School', 'Roots SChool', 'Jinnah School'] },
@@ -182,27 +21,59 @@ const TABS = [
 ];
 
 
-const ProfileScreen= () => {
+const ProfileScreen = () => {
   const [activeTab, setActiveTab] = useState(0);
   const { user, logout } = useContext(AuthContext);
   const [userEmail, setUserEmail] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const[userData , setUserData] = useState([]);
+  const [students, setStudents] = useState([
+    { id: 1, name: 'Ahmed' },
+    { id: 2, name: 'Umer' },
+    { id: 3, name: 'Abdullah' },
+  
+  ]);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   const renderTabContent = () => {
-    const { title, icon, data } = TABS[activeTab];
+    const {  data } = TABS[activeTab];
     return (
       <View style={styles.tabContent}>
         {/* <FeatherIcon name={icon} size={24} color="#000" />
         <Text style={styles.tabTitle}>{title}</Text> */}
-        <MapComponent style={{borderRadius:4}}/>
+        <MapComponent style={{ borderRadius: 4 }} />
         {data.map((item, index) => (
           <View key={index} style={styles.tabDetail}>
-          <FeatherIcon name="check-circle" size={16} color = {primary} />
+            <FeatherIcon name="check-circle" size={16} color={primary} />
             <Text style={styles.tabDetailText}>{item}</Text>
           </View>
         ))}
       </View>
     );
   };
+
+  const getData = () => {
+    let tempData = []
+    firestore()
+    .collection('DriverForm')
+    .get()
+    .then(querySnapshot => {
+       querySnapshot.forEach(documentSnapshot => {
+        console.log(
+          'User ID:',
+          documentSnapshot.id,
+          documentSnapshot.data(),
+        );
+       });
+    });
+  }
 
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged(user => {
@@ -214,12 +85,22 @@ const ProfileScreen= () => {
     });
     return unsubscribe;
   }, []);
+  useEffect(()=>{
+    getData();
+    getFcmToken();
+},[]);
+
+const getFcmToken = async() => {
+  token = await messaging().getToken();
+  }
+
+ 
 
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
-      <ImageBackground source={require('../../../assets/menu.png')} style={styles.orangeSection}/>
-        <Menu/>
+        <ImageBackground source={require('../../../assets/menu.png')} style={styles.orangeSection} />
+        <Menu />
         <View style={styles.LightSection} />
         <View style={styles.centerContainer}>
           <View style={styles.whiteContainer}>
@@ -234,22 +115,27 @@ const ProfileScreen= () => {
           </View>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingVertical: 10 }}>
-          <GradientButton title={"Edit Profile"}/>
-          <GradientIconButton iconName="account-supervisor" iconSize={20}/>
+          <GradientButton title={"Edit Profile"} />
+          <GradientIconButton iconName="account-supervisor" iconSize={20} onPress={openModal} />
+          <ModalStudentList
+            visible={modalVisible}
+            closeModal={closeModal}
+            studentList={students}
+          />
         </View>
       </View>
       <View>
       </View>
       <View style={styles.detailContainer}>
-      <View style={styles.tabBar}>
-        {TABS.map((tab, index) => (
-          <TouchableOpacity key={tab.id} style={[styles.tab, index === activeTab && styles.activeTab]} onPress={() => setActiveTab(index)}>
-            <FeatherIcon name={tab.icon} size={22} color={index === activeTab ? primary : '#000'} />
-            <Text style={[styles.tabText, index === activeTab && styles.activeTabText]}>{tab.title}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-      {renderTabContent()}
+        <View style={styles.tabBar}>
+          {TABS.map((tab, index) => (
+            <TouchableOpacity key={tab.id} style={[styles.tab, index === activeTab && styles.activeTab]} onPress={() => setActiveTab(index)}>
+              <FeatherIcon name={tab.icon} size={22} color={index === activeTab ? primary : '#000'} />
+              <Text style={[styles.tabText, index === activeTab && styles.activeTabText]}>{tab.title}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        {renderTabContent()}
       </View>
     </View >
   );
@@ -271,7 +157,7 @@ const styles = StyleSheet.create({
   orangeSection: {
     flex: 3,
     backgroundColor: primary,
-    padding: 20, 
+    padding: 20,
   },
   LightSection: {
     flex: 2,
@@ -321,15 +207,15 @@ const styles = StyleSheet.create({
     left: '13%',
     transform: [{ translateX: -50 }, { translateY: -50 }],
   },
-  primaryText:{
-    fontSize: 19, 
-    fontWeight: 'bold', 
-    color: 'black', 
+  primaryText: {
+    fontSize: 19,
+    fontWeight: 'bold',
+    color: 'black',
     marginBottom: 1,
   },
-  secondaryText:{
-    fontSize: 15, 
-    color: secondaryLight, 
+  secondaryText: {
+    fontSize: 15,
+    color: secondaryLight,
   },
   detailContainer: {
     flex: 6,
@@ -339,7 +225,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: whiteplus,
-    paddingHorizontal:"6%",
+    paddingHorizontal: "6%",
     paddingVertical: 5,
   },
   tab: {
@@ -352,12 +238,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
     paddingHorizontal: 8,
     paddingVertical: 6,
-    borderBottomColor:primary,
+    borderBottomColor: primary,
   },
   activeTab: {
-    borderBottomColor:primary,
+    borderBottomColor: primary,
     // backgroundColor: primary,
-    borderBottomWidth:2,
+    borderBottomWidth: 2,
   },
   tabText: {
     marginLeft: 4,
@@ -371,7 +257,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // alignItems: 'center',
     // justifyContent: 'center',
-    margin:"4%",
+    margin: "4%",
     paddingHorizontal: 16,
 
   },
@@ -379,7 +265,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     fontSize: 24,
     fontWeight: 'bold',
-    color:secondary
+    color: secondary
   },
   tabDetail: {
     flexDirection: 'row',
@@ -389,7 +275,7 @@ const styles = StyleSheet.create({
   tabDetailText: {
     marginLeft: 8,
     fontSize: 16,
-    color:primaryLight
+    color: primaryLight
   },
 
 });

@@ -8,4 +8,6 @@ export const white= '#fff';
 export const grey = '#babbc3';
 export const red = 'red';
 export const whiteplus = '#FFFAFA';
+export const black = 'black';
+
  

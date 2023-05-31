@@ -1,5 +1,4 @@
 import React, { createContext, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
@@ -8,70 +7,44 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(false);
-
-    const handleUserTypeSelect = async (userType) => {
-        await AsyncStorage.setItem('userType', userType);
-        setUser({ ...user, userType });
-    };
-
-
+    const[role,setRole] = useState('');
     return (
         <AuthContext.Provider
             value={{
                 user,
                 setUser,
-                login: async (email, password,setLoading) => {
+                role,
+                login: async (email, password, setLoading) => {
                     try {
                         setLoading(true);
                         await auth().signInWithEmailAndPassword(email, password);
-                        // then((response) => {
-                        //     const token = response.user._user.uid; // access the user ID token
-                        //     console.log("Token:",token);
-                        //   })
-                        // const userType = await AsyncStorage.getItem('userType');
-                        // if (userType) {
-                        //     setUser({ ...user, userType });
-                        // }
-                        const idTokenResult = await firebase.auth().currentUser.getIdTokenResult();
-                        console.log('User JWT: ', idTokenResult.token);
+                        firebase.firestore().collection('users').doc(user.uid).get()
+                        .then((doc) => {
+                          if (doc.exists) {
+                            const userData = doc.data();
+                            const role = userData.role;
+                            if (role === 'finder') {
+                                navigation.navigate('FinderStack');
+                              } else if (role === 'driver') {
+                                navigation.navigate('DriverRegistration');
+                              }
+                            } else if (role === '') {
+                                navigation.navigate('UserTypeScreen');
+                              }
+                            })
+                    
                     } catch (e) {
                         console.log(e);
                     }
                     finally {
                         setLoading(false);
-                      }
+                    }
                 },
                 googleLogin: async () => {
                     try {
-                        // Get the users ID token
                         const { idToken } = await GoogleSignin.signIn();
-
-                        // Create a Google credential with the token
                         const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-                        // Sign-in the user with the credential
                         await auth().signInWithCredential(googleCredential)
-                            // Use it only when user Sign's up, 
-                            // so create different social signup function
-                            // .then(() => {
-                            //   //Once the user creation has happened successfully, we can add the currentUser into firestore
-                            //   //with the appropriate details.
-                            //   // console.log('current User', auth().currentUser);
-                            //   firestore().collection('users').doc(auth().currentUser.uid)
-                            //   .set({
-                            //       fname: '',
-                            //       lname: '',
-                            //       email: auth().currentUser.email,
-                            //       createdAt: firestore.Timestamp.fromDate(new Date()),
-                            //       userImg: null,
-                            //   })
-                            //   //ensure we catch any errors at this stage to advise us if something does go wrong
-                            //   .catch(error => {
-                            //       console.log('Something went wrong with added user to firestore: ', error);
-                            //   })
-                            // })
-                            //we need to catch the whole sign up process if it fails too.
                             .catch(error => {
                                 console.log('Something went wrong with sign up: ', error);
                             });
@@ -79,44 +52,36 @@ export const AuthProvider = ({ children }) => {
                         console.log({ error });
                     }
                 },
-                register: async (email, password,setLoading) => {
+                register: async (email, password, setLoading) => {
                     try {
                         setLoading(true);
                         const userCredential = await auth().createUserWithEmailAndPassword(email, password);
                         const user = userCredential.user;
-                        const idToken = await user.getIdToken(); // get the user ID token
-                        console.log(idToken); // log the user ID token to the console
-                        handleUserTypeSelect(null); // call a function to handle user type selection
-                    } catch (e) {
-                        console.log(e); // log any errors that occur during registration
-                    }
-                    finally {
-                        setLoading(false);
-                      }
-                },
-                // register: async (email, password) => {
-                //     try {
-                //         await auth().createUserWithEmailAndPassword(email, password);
-                //         then((response) => {
-                //             const token = response.user._user.uid; // access the user ID token
-                //             console.log("Token:",token);
-                //           })
-                //         handleUserTypeSelect(null);
-                //     } catch (e) {
-                //         console.log(e);
-                //     }
-                // },
-                logout: async () => {
-                    try {
-                        await auth().signOut();
-                    } catch (e) {
-                        console.log(e);
-                    }
+                        firebase.firestore().collection('users').doc(user.uid).set({
+                            role: '',
+                        });
+                            //to get jwt token on console
+                            const idToken = await user.getIdToken();
+                            console.log(idToken);
+                        } catch (e) {
+                            console.log(e);
+                        }
+                        finally {
+                            setLoading(false);
+                        }
+                    },
+                    logout: async () => {
+                        try {
+                            await auth().signOut();
+                        } catch (e) {
+                            console.log(e);
+                        }
 
-                },
-            }}
-        >
-            {children}
-        </AuthContext.Provider>
+                    },
+            }
+            }
+                >
+                { children }
+        </AuthContext.Provider >
     );
 };

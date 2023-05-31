@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  SafeAreaView,
-  TextInput,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  ActivityIndicator,
-  ScrollView
-} from 'react-native';
+import { View, SafeAreaView, TextInput, Text, Image, StyleSheet, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import firestore from '@react-native-firebase/firestore';
@@ -59,7 +49,7 @@ const Search = ({ searchResult, index }) => {
     } catch (e) {
       setError('Error fetching data. Please try again later.');
       setSearchResults([]);
-    } finally {
+    } finally {                 
       setLoading(false);
     }
   };

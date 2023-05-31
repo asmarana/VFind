@@ -6,10 +6,13 @@ import Loader from '../components/loader/loader';
 import AuthStack from './authStack';
 import AppStack from './appStack';
 import DriverStack from './driverStack';
+import DriverRegistration from '../screens/startup/driverRegistration';
+import FinderStack from './finderStack';
+import UserTypeScreen from '../screens/startup/userType';
 
 const Routes = () => {
 
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, role } = useContext(AuthContext);
   const [initializing, setInitializing] = useState(true);
 
   const onAuthStateChanged = (user) => {
@@ -30,7 +33,7 @@ const Routes = () => {
 
   return (
     <NavigationContainer>
-      {user ? <DriverStack /> : <AuthStack />}
+      {user ? (role === '' ? <DriverStack/>: (role === 'driver'? <AppStack /> : <FinderStack />)) : <AuthStack />}
     </NavigationContainer>
   );
 };
