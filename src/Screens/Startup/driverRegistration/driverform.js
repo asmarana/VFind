@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { SafeAreaView, ScrollView, View, Text, Image, Keyboard } from 'react-native';
 import { primaryLight, secondary, whiteplus } from '../../../constants/colors';
 import BorderInput from '../../../components/input/borderInput';
@@ -6,8 +6,12 @@ import Button from '../../../components/button/button';
 import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../../../navigation/authProvider';
+import { FormProvider, FormContext } from '../../../helper/formContext';
+import auth from '@react-native-firebase/auth';
+import SelectableDropdown from '../../../components/input/selectableDropdown';
 
-const DriverForm = () => {
+const DriverFormScreen = () => {
+  const { setForm1Filled } = useContext(FormContext);
   const navigation = useNavigation();
 
   const { user } = useContext(AuthContext);
@@ -18,10 +22,12 @@ const DriverForm = () => {
     school: '',
     cnic: '',
   });
+  const [userEmail, setUserEmail] = useState(null);
   const [errors, setErrors] = useState({});
   const [fullName, setFullName] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(null);
-  const [school, setSchool] = useState(null);
+  // const [school, setSchool] = useState(null);
+  const [selectedSchools, setSelectedSchools] = useState([]);
   const [cnic, setCnic] = useState(null);
 
   const validate = () => {
@@ -36,29 +42,30 @@ const DriverForm = () => {
     if (!inputs.phone) {
       handleError('Please input phone number', 'phone');
       isValid = false;
-    }else if (inputs.phone.length !== 11) {
+    } else if (inputs.phone.length !== 11) {
       handleError('Invalid Phone Number', 'phone');
       isValid = false;
-    }else if (/[^0-9-]/.test(inputs.phone)) {
+    } else if (/[^0-9-]/.test(inputs.phone)) {
       handleError('Invalid Phone number. Special characters are not allowed', 'phone');
       isValid = false;
-    }else if (!inputs.phone.startsWith('03')) {
+    } else if (!inputs.phone.startsWith('03')) {
       handleError('Invalid Phone number. First two digits should be "03"', 'phone');
       isValid = false;
     }
 
-    if (!inputs.school) {
-      handleError('Please input school', 'school');
-      isValid = false;
-    }
+    // if (!inputs.school) {
+    //   handleError('Please input school', 'school');
+    //   isValid = false;
+    // }
+
     if (!inputs.cnic) {
       handleError('Please input CNIC number', 'cnic');
       isValid = false;
-    }else if (/[a-zA-Z]/.test(inputs.cnic)) {
+    } else if (/[a-zA-Z]/.test(inputs.cnic)) {
       handleError('Invalid CNIC number. Alphabets are not allowed', 'cnic');
       isValid = false;
-    }  
-     else if (inputs.cnic.length !== 13) {
+    }
+    else if (inputs.cnic.length !== 13) {
       handleError('Invalid CNIC number. CNIC should be 13 characters long', 'cnic');
       isValid = false;
     } else if (/[^0-9-]/.test(inputs.cnic)) {
@@ -69,7 +76,6 @@ const DriverForm = () => {
     if (isValid) {
       setFullName(inputs.fullname)
       setPhoneNumber(inputs.phone)
-      setSchool(inputs.school)
       setCnic(inputs.cnic)
       submitData();
 
@@ -83,27 +89,57 @@ const DriverForm = () => {
     setErrors(prevState => ({ ...prevState, [input]: error }));
   };
 
+  const handleSchoolChange = (options) => {
+    setSelectedSchools(options);
+  };
+
 
   const submitData = async () => {
     firestore()
-      .collection('driverData')
-      .add({
+      .collection('driverData').doc(userEmail)
+      .set({
         driverId: user.uid,
+        email: userEmail,
         fullName: fullName,
-        PhoneNumber: phoneNumber,
-        school: school,
-        CNIC: cnic,
+        phoneNumber: phoneNumber,
+        school: selectedSchools,
+        cnic: cnic,
+
       })
       .then(() => {
         console.log('Driver Personal data added!');
-        // navigation.navigate('DriverRegistration');
-        navigation.navigate('VehicleInfoScreen');
+        setForm1Filled(true);
+        navigation.navigate('DriverRegistration');
+        // navigation.navigate('VehicleInfoScreen');
       })
       .catch((error) => {
         console.log('Something went wrong');
       });
-
   }
+  useEffect(() => {
+    const unsubscribe = auth().onAuthStateChanged(user => {
+      if (user) {
+        setUserEmail(user.email);
+      } else {
+        setUserEmail(null);
+      }
+    });
+    return unsubscribe;
+  }, []);
+
+  const schools = [
+    'Sir Syed School',
+    'Lahore Grammar School (Wah Campus)',
+    'The Educators',
+    'Roots Thematic Montessori Wah Cantt',
+    'Green City Public High School',
+    'PICS Model School and Montessori System',
+    'Beaconhouse School System (Primary Wah Branch)',
+    'Beaconhouse School System (Senior Wah Branch)',
+    'Margalla Grammar School Senior Campus',
+    'Organon Schooling Concepts',
+    "Froebel's International School (Wah)"
+  ];
 
   return (
     <SafeAreaView style={{ backgroundColor: whiteplus, flex: 1 }}>
@@ -137,14 +173,25 @@ const DriverForm = () => {
             placeholder="Enter your phone number"
             error={errors.phone}
           />
-          <BorderInput
+          <SelectableDropdown
+            label="Schools"
+            iconName="map-outline"
+            error={errors.school}
+            onFocus={() => handleError(null, 'school')}
+            placeholder="Select Schools"
+            options={schools}
+            onChangeOptions={handleSchoolChange}
+            value={selectedSchools.join(', ')}
+          />
+
+          {/* <BorderInput
             onChangeText={text => handleOnchange(text, 'school')}
             onFocus={() => handleError(null, 'school')}
             iconName="map-outline"
             label="School"
             placeholder="Enter School"
             error={errors.school}
-          />
+          /> */}
 
           <BorderInput
             keyboardType="numeric"
@@ -161,5 +208,11 @@ const DriverForm = () => {
     </SafeAreaView>
   );
 };
-
+const DriverForm = () => {
+  return (
+    <FormProvider>
+      <DriverFormScreen />
+    </FormProvider>
+  )
+}
 export default DriverForm;

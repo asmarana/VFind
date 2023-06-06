@@ -4,12 +4,7 @@ import { black, grey, secondary, whiteplus } from '../../constants/colors';
 
 const ModalStudentList = ({ visible, closeModal, studentList }) => {
   return (
-    <Modal
-      visible={visible}
-      transparent={true} 
-      animationType="fade" 
-      onRequestClose={closeModal}
-    >
+    <Modal visible={visible} transparent={true} animationType="fade" onRequestClose={closeModal}>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <View style={styles.header}>
@@ -18,13 +13,7 @@ const ModalStudentList = ({ visible, closeModal, studentList }) => {
               <Text style={styles.closeIcon}>&times;</Text>
             </TouchableOpacity>
           </View>
-          <FlatList
-            data={studentList}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <Text style={styles.studentName}>{item.name}</Text>
-            )}
-          />
+          {studentList}
         </View>
       </View>
     </Modal>

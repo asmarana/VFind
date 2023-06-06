@@ -1,13 +1,14 @@
 import React, { createContext, useState } from 'react';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-
+import firestore from '@react-native-firebase/firestore';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const[role,setRole] = useState('');
+    let r1;
     return (
         <AuthContext.Provider
             value={{
@@ -18,23 +19,18 @@ export const AuthProvider = ({ children }) => {
                     try {
                         setLoading(true);
                         await auth().signInWithEmailAndPassword(email, password);
-                        firebase.firestore().collection('users').doc(user.uid).get()
-                        .then((doc) => {
-                          if (doc.exists) {
-                            const userData = doc.data();
-                            const role = userData.role;
-                            if (role === 'finder') {
-                                navigation.navigate('FinderStack');
-                              } else if (role === 'driver') {
-                                navigation.navigate('DriverRegistration');
-                              }
-                            } else if (role === '') {
-                                navigation.navigate('UserTypeScreen');
-                              }
-                            })
+                        try {
+                            console.log(user)
+                            
+                        
+                           console.log("role",role)
+                         } catch (err) {
+                           console.log(err)
+                         }
                     
                     } catch (e) {
                         console.log(e);
+                        alert(e)
                     }
                     finally {
                         setLoading(false);
@@ -57,14 +53,12 @@ export const AuthProvider = ({ children }) => {
                         setLoading(true);
                         const userCredential = await auth().createUserWithEmailAndPassword(email, password);
                         const user = userCredential.user;
-                        firebase.firestore().collection('users').doc(user.uid).set({
-                            role: '',
-                        });
                             //to get jwt token on console
                             const idToken = await user.getIdToken();
                             console.log(idToken);
                         } catch (e) {
                             console.log(e);
+                            alert(e)
                         }
                         finally {
                             setLoading(false);

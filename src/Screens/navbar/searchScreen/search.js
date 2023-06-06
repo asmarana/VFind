@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, SafeAreaView, TextInput, Text, Image, StyleSheet, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { whiteplus, primary, secondary, secondaryLight } from '../../../constants/colors';
+import { AuthContext } from '../../../navigation/authProvider';
+import auth from '@react-native-firebase/auth';
 
 const Search = ({ searchResult, index }) => {
+  const [userEmail, setUserEmail] = useState(null);
   const [searchSchool, setSearchSchool] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,44 +18,104 @@ const Search = ({ searchResult, index }) => {
   const [requestSent, setRequestSent] = useState(false);
 
   const navigation = useNavigation();
+  const { user } = useContext(AuthContext);
 
-
-
-  const handleSendRequest = () => {
+  const handleSendRequest = (driverEmail) => {
+    console.log("Send Request Button Clicked")
+    alert("Request Send")
     setRequestSent(true);
+    RequestData(driverEmail,user.uid)
   }
 
   const handleResetRequest = () => {
     setRequestSent(false);
   }
 
-
+  const RequestData = (driverEmail, studentId) => {
+    const driverRequestRef = firestore().collection('driverRequest').doc(driverEmail);
+  
+    driverRequestRef
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          const existingData = doc.data();
+          const students = existingData.students || [];
+  
+          const isDuplicate = students.some((student) => student.id === studentId);
+          
+          if (isDuplicate) {
+            console.log('StudentId already exists in the driver request.');
+          } else {
+            students.push({ email: userEmail, id: studentId });
+  
+            driverRequestRef
+              .update({
+                students: students,
+              })
+              .then(() => {
+                console.log('Driver request data updated!');
+              })
+              .catch((error) => {
+                console.log('Something went wrong');
+              });
+          }
+        } else {
+          driverRequestRef
+            .set({
+              driverEmail: driverEmail,
+              students: [{ email: userEmail, id: studentId }],
+            })
+            .then(() => {
+              console.log('Driver request data added!');
+            })
+            .catch((error) => {
+              console.log('Something went wrong',error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.log('Something went wrong',error);
+      });
+  };
+  
   useEffect(() => {
     if (searchSchool.length > 0) {
-      searchFirestore();
+      searchDriver();
     } else {
       setSearchResults([]);
-    }
+    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
   }, [searchSchool]);
 
-  const searchFirestore = async () => {
+  const searchDriver = async () => {
     setLoading(true);
     try {
       const querySnapshot = await firestore()
         .collection('driverData')
-        .where('school', '>=', searchSchool)
+        // .where('school.0', '==', searchSchool)
         .where('school', '<=', searchSchool + '\uf8ff')
         .get();
 
       const results = querySnapshot.docs.map((doc) => doc.data());
+      console.log("Search Data:",results)
       setSearchResults(results);
     } catch (e) {
+      console.log(e)
       setError('Error fetching data. Please try again later.');
       setSearchResults([]);
     } finally {                 
       setLoading(false);
     }
   };
+  useEffect(() => {
+    const unsubscribe = auth().onAuthStateChanged(user => {
+        if (user) {
+            setUserEmail(user.email);
+        } else {
+            setUserEmail(null);
+        }
+    });
+    return unsubscribe;
+}, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -78,13 +141,13 @@ const Search = ({ searchResult, index }) => {
             <View style={styles.resultContainer}>
               {searchResults.map((result) => (
                 <View style={styles.searchResultContainer}>
-                  <TouchableOpacity key={result.driverId}
-                    onPress={() => navigation.navigate('DriverProfile')}>
+                  <TouchableOpacity key={result.email}
+                    onPress={() => navigation.navigate('DriverProfile', { driverId: result.email })}>
                     <View style={styles.searchResultItem}>
-                      <Image style={styles.resultImage} source={{ uri: result.PhotoURL }} />
+                      <Image style={styles.resultImage} />
                       <View style={styles.resultTextContainer}>
                         <Text style={styles.resultTopText} >{result.fullName}</Text>
-                        <Text style={styles.resultBottomText}>{result.school}</Text>
+                        {/* <Text style={styles.resultBottomText}>{result.school}</Text> */}
                       </View>
                     </View>
                   </TouchableOpacity>
@@ -95,15 +158,15 @@ const Search = ({ searchResult, index }) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={requestSent ? styles.requestedButton : styles.sendRequestButton}
-                      onPress={requestSent ? handleResetRequest : handleSendRequest}>
-                      {requestSent ? (
+                      onPress={requestSent ? handleResetRequest : handleSendRequest(result.email)}>
+                      {/* {requestSent ? (
                         <View style={styles.row}>
                           <Text style={styles.buttonText}>Request Sent</Text>
                           <Ionicons name="checkmark-sharp" size={20} color="white" style={styles.icon} />
                         </View>
-                      ) : (
+                      ) : ( */}
                         <Text style={styles.buttonText}>Send Request</Text>
-                      )}
+                      {/* )} */}
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -230,12 +293,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
   },
-  // buttonText: {
-  //   color: '#ffffff',
-  //   fontSize: 18,
-  //   fontWeight: 'bold',
-  //   textAlign: 'center',
-  // },
   button: {
     backgroundColor: 'orange',
     paddingHorizontal: 20,

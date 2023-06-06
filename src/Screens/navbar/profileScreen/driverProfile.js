@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Image, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import {primary, primaryLight, secondary, secondaryLight, white, whiteplus } from '../../../constants/colors';
 import GradientButton from '../../../components/button/gradientButton';
@@ -7,6 +7,7 @@ import GradientIconButton from '../../../components/button/gradientIconButton';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import StarRating from '../../../components/starRating/starRating';
 import MapComponent from '../../../components/map';
+import firestore from '@react-native-firebase/firestore';
 
 const TABS = [
   { id: 1, title: 'Schools', icon: 'book-open', data: ['City Model School', 'Roots SChool', 'Jinnah School'] },
@@ -15,8 +16,9 @@ const TABS = [
 ];
 
 
-const DriverProfile = () => {
+const DriverProfile = ({navigation,route}) => {
   const [activeTab, setActiveTab] = useState(0);
+  const [driverData, setDriverData] = useState({});
 
   const renderTabContent = () => {
     const { title, icon, data } = TABS[activeTab];
@@ -34,6 +36,28 @@ const DriverProfile = () => {
       </View>
     );
   };
+  useEffect(() => {
+    getDriverData();
+  }, []);
+
+  const getDriverData = async () => {
+    try {
+      const driverSnapshot = await firestore().collection('driverData').where('driverId', '==', route.params.driverId).get();
+      if (!driverSnapshot.empty) {
+        const driverData = [];
+        driverSnapshot.forEach((documentSnapshot) => {
+          const data = documentSnapshot.data();
+          driverData.push(data);
+        });
+        console.log('Driver Data:', driverData);
+        setDriverData(driverData);
+      } else {
+        console.log('Driver data does not exist');
+      }
+    } catch (error) {
+      console.log('Error getting driver data:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -46,9 +70,9 @@ const DriverProfile = () => {
               <Image style={styles.image} source={require('../../../assets/img2.jpg')} />
             </View>
             <View style={styles.infoContainer}>
-              <Text style={styles.primaryText}>Sazuki Van</Text>
-              {/* <Text style={styles.secondaryText}>@faheemanwar</Text> */}
-              <Text style={styles.secondaryText}>City Model School</Text>
+              <Text style={styles.primaryText}>{driverData.fullName ? driverData.fullName : 'Loading...'}</Text>
+              <Text style={styles.secondaryText}>{route.params ? route.params.driverId : user.uid}</Text>
+              {/* <Text style={styles.secondaryText}>City Model School</Text> */}
               <StarRating  size={14}/>
             </View>
           </View>
