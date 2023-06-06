@@ -35,8 +35,8 @@ const Menu = () => {
             <View style={styles.menuItem}>
               <MaterialIcons name="settings" size={24} color="black" />
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleOption2Press}>
+          </TouchableOpacity> */}
+          {/* <TouchableOpacity onPress={handleOption2Press}>
             <View style={styles.menuItem}>
               <MaterialIcons name="help" size={24} color="black" />
             </View>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 50,
     right: 0,
-    height:100,
+    // height:100,
     width: 60,
     backgroundColor: 'white',
     borderRadius: 8,

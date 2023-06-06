@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { SafeAreaView, ScrollView, View, Text, Image, Keyboard } from 'react-native';
 import { primary, primaryLight, secondary, whiteplus } from '../../../constants/colors';
 import BorderInput from '../../../components/input/borderInput';
@@ -6,8 +6,11 @@ import Button from '../../../components/button/button';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../../navigation/authProvider';
+import { FormProvider, FormContext } from '../../../helper/formContext';
+import auth from '@react-native-firebase/auth';
 
-const VehicleForm = () => {
+const VehicleFormScreen = () => {
+    const { setForm2Filled } = useContext(FormContext);
     const navigation = useNavigation();
 
     const { user } = useContext(AuthContext);
@@ -20,6 +23,8 @@ const VehicleForm = () => {
         totalSeats: '',
         availableSeats: '',
     });
+
+    const [userEmail, setUserEmail] = useState(null);
     const [errors, setErrors] = useState({});
     const [vehicleName, setVehicleName] = useState(null);
     const [vehicleType, setVehicleType] = useState(null);
@@ -31,14 +36,23 @@ const VehicleForm = () => {
     const validate = () => {
         Keyboard.dismiss();
         let isValid = true;
+        const pattern = /^[A-Z]\d{3}[A-Z]{2}$/;
+        const minLength = 6;
+        const maxLength = 8;
 
         if (!inputs.vehicleType) {
             handleError('Please input Vehicle Type', 'vehicleType');
+            isValid = false;
+        } else if (!/^[a-zA-Z\s]+$/.test(inputs.vehicleType)) {
+            handleError('Vehicle type should only contain alphabets', 'vehicleType');
             isValid = false;
         }
 
         if (!inputs.vehicleName) {
             handleError('Please input Vehicle Name', 'vehicleName');
+            isValid = false;
+        } else if (!/^[a-zA-Z\s]+$/.test(inputs.vehicleName)) {
+            handleError('Vehicle Name should only contain alphabets', 'vehicleName');
             isValid = false;
         }
 
@@ -46,28 +60,50 @@ const VehicleForm = () => {
             handleError('Please input Vehicle Id', 'vehicleId');
             isValid = false;
         }
+        else if (!pattern.test(inputs.vehicleId)) {
+            handleError('Vehicle ID should have a specific format', 'vehicleId');
+            isValid = false;
+        }
 
         if (!inputs.lisenseNo) {
             handleError('Please input lisense No', 'lisenseNo');
             isValid = false;
+        } else if (inputs.lisenseNo.length < minLength || inputs.lisenseNo.length > maxLength) {
+            handleError(`License Number should be between ${minLength} and ${maxLength} characters long`, 'lisenseNo');
+            isValid = false;
+        } else if (!/^\d+$/.test(inputs.lisenseNo)) {
+            handleError('Only numbers are allowed', 'lisenseNo');
+            isValid = false;
         }
 
         if (!inputs.totalSeats) {
-            handleError('Please input Total Seats', 'totalSeats');
+            handleError('Please input Available Seats', 'totalSeats');
             isValid = false;
-        } else if (inputs.totalSeats.length >= 20) {
-            handleError('Total Seats will not be more than 20', 'password');
+        } else if (!/^\d+$/.test(inputs.totalSeats)) {
+            handleError('Only numbers are allowed', 'totalSeats');
             isValid = false;
-          }
+        }else if (inputs.totalSeats < 1 || inputs.totalSeats > 20) {
+            handleError(`Seats should be between 1 and 20`, 'totalSeats');
+            isValid = false;
+        } 
 
-        if (!inputs.availableSeats) {
-            handleError('Please input  Available Seats', 'availableSeats');
-            isValid = false;
-        }
-        else if (inputs.availableSeats.length >= 20) {
-            handleError('Vehicles seats will not be more than 20', 'availableSeats');
-            isValid = false;
-          }
+
+        // if (!inputs.availableSeats) {
+        //     handleError('Please input  Available Seats', 'availableSeats');
+        //     isValid = false;
+        // } else if (!/^\d+$/.test(inputs.availableSeats)) {
+        //     handleError('Only numbers are allowed', 'availableSeats');
+        //     isValid = false;
+        // }
+        // else if (inputs.availableSeats.length >= inputs.totalSeats.length) {
+        //     handleError('Available seats are not more than total seats', 'availableseats');
+        //     isValid = false;
+        // } else if (inputs.availableSeats.length < 1 || inputs.availableSeats.length > 20) {
+        //     handleError(`Total seats should be between 1 and 20`, 'availableSeats');
+        //     isValid = false;
+        // }
+
+
 
         if (isValid) {
             setVehicleName(inputs.vehicleName)
@@ -75,7 +111,7 @@ const VehicleForm = () => {
             setVehicleId(inputs.vehicleId)
             setLisenseNo(inputs.lisenseNo)
             setTotalSeats(inputs.totalSeats)
-            setAvailableSeats(inputs.availableSeats)
+            // setAvailableSeats(inputs.availableSeats)
             submitData();
         }
     };
@@ -91,9 +127,10 @@ const VehicleForm = () => {
 
     const submitData = async () => {
         firestore()
-            .collection('driverData')
-            .add({
+            .collection('vehicleData').doc(userEmail)
+            .set({
                 driverId: user.uid,
+                email: userEmail,
                 vehicleName: vehicleName,
                 vehicleType: vehicleType,
                 vehicleId: vehicleId,
@@ -103,13 +140,25 @@ const VehicleForm = () => {
             })
             .then(() => {
                 console.log('Drivers vehicle data added!');
-                navigation.navigate('RouteInfoScreen');
+                setForm2Filled(true);
+                navigation.navigate('DriverRegistration');
             })
             .catch((error) => {
                 console.log('Something went wrong');
+                alert('Something went wrong')
             });
 
     }
+    useEffect(() => {
+        const unsubscribe = auth().onAuthStateChanged(user => {
+            if (user) {
+                setUserEmail(user.email);
+            } else {
+                setUserEmail(null);
+            }
+        });
+        return unsubscribe;
+    }, []);
 
     return (
         <SafeAreaView style={{ backgroundColor: whiteplus, flex: 1 }}>
@@ -149,7 +198,7 @@ const VehicleForm = () => {
                         onFocus={() => handleError(null, 'vehicleId')}
                         iconName="tablet"
                         label="Vehicle Id"
-                        placeholder="Enter your vehicle Id"
+                        placeholder="e.g. A123BC"
                         error={errors.vehicleId}
                     />
                     <BorderInput
@@ -167,11 +216,11 @@ const VehicleForm = () => {
                         onChangeText={text => handleOnchange(text, 'totalSeats')}
                         onFocus={() => handleError(null, 'totalSeats')}
                         iconName="seat"
-                        label="Total Seats"
-                        placeholder="Enter total Seats"
+                        label="Available Seats"
+                        placeholder="Enter available Seats"
                         error={errors.totalSeats}
                     />
-                    <BorderInput
+                    {/* <BorderInput
                         keyboardType="numeric"
                         onChangeText={text => handleOnchange(text, 'availableSeats')}
                         onFocus={() => handleError(null, 'availableSeats')}
@@ -179,7 +228,7 @@ const VehicleForm = () => {
                         label="Available Seats"
                         placeholder="Enter Available Seats"
                         error={errors.availableSeats}
-                    />
+                    /> */}
                 </View>
             </ScrollView>
             <View style={{ paddingHorizontal: 20 }}>
@@ -188,5 +237,12 @@ const VehicleForm = () => {
         </SafeAreaView >
     );
 };
+const VehicleForm = () => {
+    return (
+        <FormProvider>
+            <VehicleFormScreen />
+        </FormProvider>
+    )
+}
 
 export default VehicleForm;

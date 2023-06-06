@@ -3,7 +3,6 @@ import { View, Text, SafeAreaView, Keyboard, ScrollView, Alert, StyleSheet ,Touc
 import Button from '../../../components/button/button';
 import BorderInput from '../../../components/input/borderInput';
 import Icon from 'react-native-vector-icons/FontAwesome';
-// import Lottie from 'lottie-react-native';
 // import Loader from '../../../components/loader/loader';
 import { secondary, primaryLight, whiteplus, secondaryLight } from '../../../constants/colors';
 import { AuthContext } from '../../../navigation/authProvider';

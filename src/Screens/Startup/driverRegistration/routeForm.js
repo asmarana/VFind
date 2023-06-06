@@ -1,14 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext , useEffect } from 'react';
 import { SafeAreaView, ScrollView, View, Text, Image, Keyboard } from 'react-native';
-import {primaryLight, secondary, whiteplus } from '../../../constants/colors';
+import { primaryLight, secondary, whiteplus } from '../../../constants/colors';
 import BorderInput from '../../../components/input/borderInput';
 import Button from '../../../components/button/button';
 import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../../../navigation/authProvider';
+import { FormContext, FormProvider } from '../../../helper/formContext';
+import auth from '@react-native-firebase/auth';
 
-
-const RouteForm = () => {
+const RouteFormScreen = () => {
+    const {setForm3Filled } = useContext(FormContext);
     const navigation = useNavigation();
     const { user } = useContext(AuthContext);
 
@@ -17,6 +19,8 @@ const RouteForm = () => {
         route: '',
         school: '',
     });
+
+    const [userEmail, setUserEmail] = useState(null);
     const [errors, setErrors] = React.useState({});
     const [pickupArea, setPickupArea] = useState(null);
     const [route, setroute] = useState(null);
@@ -27,24 +31,33 @@ const RouteForm = () => {
         let isValid = true;
 
         if (!inputs.pickupArea) {
-            handleError('Please input Vehicle Type', 'pickupArea');
+            handleError('Please input pickup Area', 'pickupArea');
+            isValid = false;
+        } else if (!/^[a-zA-Z\s]+$/.test(inputs.pickupArea)) {
+            handleError('Pickup area should only contain alphabets', 'pickupArea');
             isValid = false;
         }
 
         if (!inputs.route) {
-            handleError('Please input Vehicle Name', 'route');
+            handleError('Please input Route', 'route');
+            isValid = false;
+        } else if (!/^[a-zA-Z\s]+$/.test(inputs.route)) {
+            handleError('Route should only contain alphabets', 'route');
             isValid = false;
         }
 
-        if (!inputs.school) {
-            handleError('Please input Vehicle Id', 'school');
-            isValid = false;
-        }
+        // if (!inputs.school) {
+        //     handleError('Please input School', 'school');
+        //     isValid = false;
+        // } else if (!/^[a-zA-Z\s]+$/.test(inputs.school)) {
+        //     handleError('School Name should only contain alphabets', 'school');
+        //     isValid = false;
+        // }
 
         if (isValid) {
             setPickupArea(inputs.pickupArea)
             setroute(inputs.route)
-            setschool(inputs.school)
+            // setschool(inputs.school)
             submitData();
         }
     };
@@ -59,22 +72,33 @@ const RouteForm = () => {
 
     const submitData = async () => {
         firestore()
-            .collection('driverData')
-            .add({
+            .collection('route').doc(userEmail)
+            .set({
                 driverId: user.uid,
-                pickupArea : pickupArea,
-                route : route,
-                school : school,
+                email : userEmail,
+                pickupArea: pickupArea,
+                route: route,
+                // school: school,
             })
             .then(() => {
                 console.log('Drivers route data added!');
-                navigation.navigate('AppStack');
+                setForm3Filled(true);
+                navigation.navigate('DriverRegistration');
             })
             .catch((error) => {
-                console.log('Something went wrong');
+                console.log('Something went wrong', error);
             });
-
     }
+    useEffect(() => {
+        const unsubscribe = auth().onAuthStateChanged(user => {
+            if (user) {
+                setUserEmail(user.email);
+            } else {
+                setUserEmail(null);
+            }
+        });
+        return unsubscribe;
+    }, []);
 
     return (
         <SafeAreaView style={{ backgroundColor: whiteplus, flex: 1 }}>
@@ -107,19 +131,27 @@ const RouteForm = () => {
                         placeholder="Enter your route"
                         error={errors.route}
                     />
-                    <BorderInput
+                    {/* <BorderInput
                         onChangeText={text => handleOnchange(text, 'school')}
                         onFocus={() => handleError(null, 'school')}
                         iconName="map-outline"
                         label="School"
                         placeholder="Enter school"
                         error={errors.school}
-                    />
-                    <Button label="Next" onPress={validate} />
+                    /> */}
+                    <Button label="Submit" onPress={validate} />
                 </View>
             </ScrollView>
         </SafeAreaView>
     );
 };
+
+const RouteForm = () => {
+    return (
+        <FormProvider>
+            <RouteFormScreen />
+        </FormProvider>
+    )
+}
 
 export default RouteForm;

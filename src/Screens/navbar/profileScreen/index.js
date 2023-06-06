@@ -10,9 +10,12 @@ import auth from '@react-native-firebase/auth';
 import Menu from '../../../components/menu/menu';
 import messaging from '@react-native-firebase/messaging';
 import ModalStudentList from '../../../components/list/studentList';
-import firestore from '@react-native-firebase/firestore'
-let token = '';
+import { useNavigation } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
+import CustomLoader from '../../../components/loader/customLoader';
+import RegisteredStudentList from '../../../components/registeredStudents/registeredStudentList';
 
+let token = '';
 
 const TABS = [
   { id: 1, title: 'Schools', icon: 'book-open', data: ['City Model School', 'Roots SChool', 'Jinnah School'] },
@@ -22,17 +25,17 @@ const TABS = [
 
 
 const ProfileScreen = () => {
+  const navigation = useNavigation();
+
+  const { user } = useContext(AuthContext);
+
+
   const [activeTab, setActiveTab] = useState(0);
-  const { user, logout } = useContext(AuthContext);
   const [userEmail, setUserEmail] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const[userData , setUserData] = useState([]);
-  const [students, setStudents] = useState([
-    { id: 1, name: 'Ahmed' },
-    { id: 2, name: 'Umer' },
-    { id: 3, name: 'Abdullah' },
-  
-  ]);
+  const [userData, setUserData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [registeredStudents, setRegisteredStudents] = useState([]);
 
   const openModal = () => {
     setModalVisible(true);
@@ -43,7 +46,7 @@ const ProfileScreen = () => {
   };
 
   const renderTabContent = () => {
-    const {  data } = TABS[activeTab];
+    const { data } = TABS[activeTab];
     return (
       <View style={styles.tabContent}>
         {/* <FeatherIcon name={icon} size={24} color="#000" />
@@ -59,21 +62,31 @@ const ProfileScreen = () => {
     );
   };
 
-  const getData = () => {
-    let tempData = []
-    firestore()
-    .collection('DriverForm')
-    .get()
-    .then(querySnapshot => {
-       querySnapshot.forEach(documentSnapshot => {
-        console.log(
-          'User ID:',
-          documentSnapshot.id,
-          documentSnapshot.data(),
-        );
-       });
-    });
+  const getFcmToken = async () => {
+    token = await messaging().getToken();
   }
+
+  const getRegisteredStudents = async () => {
+    try {
+      console.log("Get registered students function called")
+      setLoading(true);
+      await firestore()
+        .collection('RegisteredStudents')
+        .where('driverEmail', '==', user.email)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            setRegisteredStudents(data.students)
+            console.log("Requests Data :", data)
+          });
+        })
+    } catch (e) {
+      console.log('Error fetching data. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged(user => {
@@ -83,18 +96,10 @@ const ProfileScreen = () => {
         setUserEmail(null);
       }
     });
+    getRegisteredStudents();
+    getFcmToken();
     return unsubscribe;
   }, []);
-  useEffect(()=>{
-    getData();
-    getFcmToken();
-},[]);
-
-const getFcmToken = async() => {
-  token = await messaging().getToken();
-  }
-
- 
 
   return (
     <View style={styles.container}>
@@ -115,12 +120,16 @@ const getFcmToken = async() => {
           </View>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingVertical: 10 }}>
-          <GradientButton title={"Edit Profile"} />
-          <GradientIconButton iconName="account-supervisor" iconSize={20} onPress={openModal} />
+          <GradientButton title={"Registered Students"} onPress={openModal}/>
+          {/* <GradientIconButton  iconName="account-supervisor" iconSize={20} onPress={openModal} /> */}
           <ModalStudentList
             visible={modalVisible}
             closeModal={closeModal}
-            studentList={students}
+            studentList={loading ? (
+              <CustomLoader />
+            ) : (
+              <RegisteredStudentList data={registeredStudents} />
+            )}
           />
         </View>
       </View>
